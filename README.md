@@ -1,12 +1,15 @@
 Overview
 ===============
 
-Collection of plugins for Eclipse and CDT. Font Size changer via keyboard and across project environment control. 
+A collection of plugins for Eclipse and CDT. 
+* Font Size changer via keyboard 
+* UI menu cleanup
+* Across project environment control. 
 
 Font Size changer 
 ==
 
-Using <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>+</kbd> to increase and <kbd>CTRL+</kbd><kbd>SHIFT</kbd>+<kbd>-</kbd> to decrease font size whilst <kbd>CTRL</kbd>+<kbd>0</kbd> is available to reset to 12pt a default font size quickly. The none standard latter key combination is chosen so as not to conflict with the default keys used by CDT for source navigation.
+Using <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>+</kbd> to increase and <kbd>CTRL</kbd>+<kbd>SHIFT</kbd>+<kbd>-</kbd> to decrease font size whilst <kbd>CTRL</kbd>+<kbd>0</kbd> is available to reset to 12pt a default font size quickly. The none standard latter key combination is chosen so as not to conflict with the default keys used by CDT for source navigation.
 
 UI Utils
 ==
