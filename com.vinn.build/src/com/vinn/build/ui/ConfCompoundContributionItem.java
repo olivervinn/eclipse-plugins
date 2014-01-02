@@ -66,7 +66,7 @@ public class ConfCompoundContributionItem extends CompoundContributionItem
 
     IContainer container = myWorkspaceRoot.getContainerForLocation(path);
     IPreferenceStore p = Activator.getDefault().getPreferenceStore();
-    final String extension = p.getString(PreferenceConstants.P_STRING_CONF_EXTENSION).trim();
+    final String extension = p.getString(PreferenceConstants.P_STRING_CONF_DEFINE_REGEX).trim();
 
     try {
       IResource[] iResources;

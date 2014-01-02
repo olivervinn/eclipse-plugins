@@ -36,12 +36,21 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
     addField(new SpacerFieldEditor(getFieldEditorParent()));
     addField(new AddRemoveListFieldEditor(PreferenceConstants.P_EXCLUDED_PROJECT_NAME_ENDINGS,
         "List of project name endings to ignore", getFieldEditorParent()));
+    
     addField(new SpacerFieldEditor(getFieldEditorParent()));
-    addField(new StringFieldEditor(PreferenceConstants.P_STRING_CONF_EXTENSION,
-        "&Configuration file extension (without dot)", getFieldEditorParent()));
-    addField(new StringFieldEditor(PreferenceConstants.P_STRING_CONF_PATH,
-        "&Configuration folder path (from workspace)", getFieldEditorParent()));
+    addField(new StringFieldEditor(PreferenceConstants.P_STRING_CONF_SELECTOR_REGEX,
+        "Regex to find a configuration e.g. <project>/path/\\.conf (from workspace)", getFieldEditorParent()));
     addField(new SpacerFieldEditor(getFieldEditorParent()));
+    
+    addField(new StringFieldEditor(PreferenceConstants.P_STRING_CONF_DEFINE_FILENAME,
+      "Selector for file in configuration &Configuration file extension (without dot)", getFieldEditorParent()));
+    addField(new StringFieldEditor(PreferenceConstants.P_STRING_CONF_DEFINE_REGEX,
+      "&Configuration file extension (without dot)", getFieldEditorParent()));
+    
+    addField(new StringFieldEditor(PreferenceConstants.P_STRING_CONF_ENBFOLDER_FILENAME,
+      "&RegEx to findConfiguration file extension (without dot)", getFieldEditorParent()));
+    addField(new StringFieldEditor(PreferenceConstants.P_STRING_CONF_ENBFOLDER_REGEX,
+      "&Configuration file extension (without dot)", getFieldEditorParent()));
   }
 
   /*

@@ -21,8 +21,8 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
     IPreferenceStore store = Activator.getDefault().getPreferenceStore();
     store.setDefault(PreferenceConstants.P_HIDE_LINK_CONFIRMATION, false);
     store.setDefault(PreferenceConstants.P_EXCLUDED_PROJECT_NAME_ENDINGS, "build;.doc;.test;");
-    store.setDefault(PreferenceConstants.P_STRING_CONF_PATH, "/project/build/conf");
-    store.setDefault(PreferenceConstants.P_STRING_CONF_EXTENSION, "conf");
+    store.setDefault(PreferenceConstants.P_STRING_CONF_SELECTOR_REGEX, "/project/build/conf");
+    store.setDefault(PreferenceConstants.P_STRING_CONF_DEFINE_REGEX, "conf");
   }
 
 }
