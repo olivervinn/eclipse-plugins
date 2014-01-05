@@ -1,4 +1,4 @@
-package com.vinn.build.preferences;
+package com.vinn.build.cdt.preferences;
 
 import org.eclipse.jface.preference.FieldEditor;
 import org.eclipse.swt.layout.GridData;

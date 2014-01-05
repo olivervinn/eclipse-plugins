@@ -28,10 +28,26 @@
             id="com.vinn.build.commands.applyConfiguration"
             name="com.vinn.build.commands.applyConfiguration">
          <commandParameter
-               id="com.vinn.build.commands.applyConfigurationParameter1"
-               name="name"
-               optional="true">
+               id="com.vinn.build.commandParameter1"
+               name="resource"
+               optional="true"
+               typeId="org.eclipse.ui.ide.resourcePath">
          </commandParameter>
+      </command>
+      <command
+            defaultHandler="com.vinn.build.handlers.CancelIndexerHandler"
+            id="com.vinn.build.commands.indexer.cancel"
+            name="com.vinn.build.commands.indexer.cancel">
+      </command>
+      <command
+            defaultHandler="com.vinn.build.handlers.RebuildIndexerHandler"
+            id="com.vinn.build.commands.indexer.rebuild"
+            name="com.vinn.build.commands.indexer.rebuild">
+      </command>
+      <command
+            defaultHandler="com.vinn.build.handlers.RefreshProjectsHandler"
+            id="com.vinn.build.commands.refreshall"
+            name="com.vinn.build.commands.refreshall">
       </command>
    </extension>
    <extension
@@ -55,17 +71,17 @@
             locationURI="menu:org.eclipse.ui.main.menu">
          <menu
                id="com.vinn.build.environment.menu"
-               label="Environment"
+               label="Tools"
                tooltip="Settings affecting all projects">
             <command
                   commandId="com.vinn.build.commands.cprojects.link"
-                  icon="icons/link.png"
+                  icon="icons/elements_obj.gif"
                   label="Associate C Projects"
                   style="push">
             </command>
             <command
                   commandId="com.vinn.build.commands.cprojects.unlink"
-                  icon="icons/delink.png"
+                  icon="icons/generic_elements.gif"
                   label="Disassociate C Projects"
                   style="push">
             </command>
@@ -80,6 +96,36 @@
                      id="com.vinn.build.dynamic.confs">
                </dynamic>
             </menu>
+            <command
+                  commandId="com.vinn.build.commands.cprojects.unlink"
+                  label="Clear Configuration"
+                  style="push">
+            </command>
+            <separator
+                  name="com.vinn.build.separator2"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="com.vinn.build.commands.indexer.rebuild"
+                  label="Rebuild Indexes"
+                  style="push">
+            </command>
+            <command
+                  commandId="com.vinn.build.commands.indexer.cancel"
+                  icon="icons/stop.gif"
+                  label="Cancel Indexer"
+                  style="push">
+            </command>
+            <separator
+                  name="com.vinn.build.separator3"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="com.vinn.build.commands.refreshall"
+                  icon="platform:/plugin/org.eclipse.ui.ide/icons/full/elcl16/refresh_nav.gif"
+                  label="Refresh All Projects"
+                  style="push">
+            </command>
          </menu>
       </menuContribution>
    </extension>
@@ -87,7 +133,7 @@
          point="org.eclipse.ui.preferencePages">
       <page
             category="org.eclipse.cdt.ui.preferences.CPluginPreferencePage"
-            class="com.vinn.build.preferences.PreferencePage"
+            class="com.vinn.build.cdt.preferences.VinnBuildPreferencePage"
             id="com.vinn.build.preferences.EnvironmentPreferencePage"
             name="Environment">
       </page>
@@ -95,8 +141,17 @@
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="com.vinn.build.preferences.PreferenceInitializer">
+            class="com.vinn.build.cdt.preferences.VinnBuildPreferenceInitializer">
       </initializer>
-   </extension>
-
+   </extension>   
+   <!--<extension
+         id="com.vinn.build.cdt.LanguageSettingsProvider"
+            name="Vinn Provider"
+         point="org.eclipse.cdt.core.LanguageSettingsProvider">
+      <provider
+            class="com.vinn.build.cdt.LanguageSettingsProvider"
+            >
+      </provider>
+   </extension>-->
+   
 </plugin>

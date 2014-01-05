@@ -22,7 +22,8 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import com.vinn.build.Activator;
-import com.vinn.build.preferences.PreferenceConstants;
+import com.vinn.build.Utils;
+import com.vinn.build.cdt.preferences.VinnBuildPreferenceConstants;
 
 public class CProjectAssociationHandler extends AbstractHandler {
 
@@ -30,20 +31,25 @@ public class CProjectAssociationHandler extends AbstractHandler {
   public Object execute(ExecutionEvent event) throws ExecutionException {
 
     IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
-    ICProject[] cProjects = getCProjects();
+    ICProject[] cProjects = Utils.getCProjects();
     IPreferenceStore p = Activator.getDefault().getPreferenceStore();
     boolean isUnlink = event.getCommand().getId().endsWith("unlink");
-    boolean continueWithLink = p.getBoolean(PreferenceConstants.P_HIDE_LINK_CONFIRMATION);
+    boolean continueWithLink = p.getBoolean(VinnBuildPreferenceConstants.P_HIDE_LINK_CONFIRMATION);
 
     if (!continueWithLink) {
+      String pNames = "";
+      for (ICProject icProject : cProjects) {
+        pNames += "\n    " + icProject.getProject().getName();
+      }
       MessageDialogWithToggle userConfirmation =
           MessageDialogWithToggle.openOkCancelConfirm(window.getShell(),
-              "Confirm Project Association", "Found " + cProjects.length
-                  + " projects to dynamically " + (isUnlink ? "unlink" : "link") + ". Continue?",
+              "Confirm Project Association", 
+              String.format("Found %d projects. Continue to dynamically %s?\n%s", 
+                cProjects.length, (isUnlink ? "unlink" : "link"), pNames),
               "Don't prompt me again", false, null, null);
 
       continueWithLink = userConfirmation.getReturnCode() == MessageDialogWithToggle.OK;
-      p.setValue(PreferenceConstants.P_HIDE_LINK_CONFIRMATION, userConfirmation.getToggleState());
+      p.setValue(VinnBuildPreferenceConstants.P_HIDE_LINK_CONFIRMATION, userConfirmation.getToggleState());
     }
 
     if (continueWithLink) {
@@ -84,40 +90,6 @@ public class CProjectAssociationHandler extends AbstractHandler {
     for (int i = 0; i < cProjectsA.length; i++) {
       CCorePlugin.getIndexManager().reindex(cProjectsA[i]);
     }
-  }
-
-  private ICProject[] getCProjects() {
-
-    try {
-      ICProject[] projects = CoreModel.getDefault().getCModel().getCProjects();
-      ArrayList<ICProject> cProjects = new ArrayList<ICProject>(projects.length);
-
-      for (ICProject iProject : projects) {
-        if (iProject.getProject().isOpen()
-            && !isProjectNameExcluded(iProject.getProject().getName())) {
-          cProjects.add(iProject);
-        }
-      }
-
-      ICProject[] cProjectsA = new ICProject[cProjects.size()];
-      cProjectsA = cProjects.toArray(cProjectsA);
-      return cProjectsA;
-
-    } catch (CModelException e1) {
-      e1.printStackTrace();
-      return null;
-    }
-  }
-
-  private boolean isProjectNameExcluded(String name) {
-    IPreferenceStore p = Activator.getDefault().getPreferenceStore();
-    final String[] excludedEndings =
-        p.getString(PreferenceConstants.P_EXCLUDED_PROJECT_NAME_ENDINGS).split(";");
-    for (String excludedEnding : excludedEndings) {
-      if (name.endsWith(excludedEnding)) return true;
-    }
-
-    return false;
   }
 
 }

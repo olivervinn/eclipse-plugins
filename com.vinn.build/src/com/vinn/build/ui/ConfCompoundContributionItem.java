@@ -1,10 +1,16 @@
 package com.vinn.build.ui;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.eclipse.core.resources.FileInfoMatcherDescription;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceFilterDescription;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -16,13 +22,11 @@ import org.eclipse.ui.menus.IWorkbenchContribution;
 import org.eclipse.ui.services.IServiceLocator;
 
 import com.vinn.build.Activator;
-import com.vinn.build.preferences.PreferenceConstants;
+import com.vinn.build.cdt.preferences.VinnBuildPreferenceConstants;
 
 public class ConfCompoundContributionItem extends CompoundContributionItem
     implements
       IWorkbenchContribution {
-
-  private long mLastTimeStamp = 0;
 
   public ConfCompoundContributionItem() {}
 
@@ -32,7 +36,6 @@ public class ConfCompoundContributionItem extends CompoundContributionItem
 
   @Override
   protected IContributionItem[] getContributionItems() {
-    mLastTimeStamp = System.currentTimeMillis();
 
     // Find Environment *.confs the parameter is the IResource
     // this is used later to extract the presentation name as well
@@ -40,16 +43,31 @@ public class ConfCompoundContributionItem extends CompoundContributionItem
 
     ArrayList<IResource> allConfFiles = new ArrayList<IResource>();
     IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-    IProject productProject = workspaceRoot.getProject("product");
-    IPath path = productProject.getLocation().append("build");
+
+    // Find project and base location to search for configurations
+
+    IPreferenceStore p = Activator.getDefault().getPreferenceStore();
+    final String projectName =
+        p.getString(VinnBuildPreferenceConstants.P_STRING_CONF_PROJECT_NAME).trim();
+    final String projectPath =
+        p.getString(VinnBuildPreferenceConstants.P_STRING_CONF_PROJECT_PATH).trim();
+
+    IProject productProject = workspaceRoot.getProject(projectName);
+    IPath path = productProject.getLocation().append(projectPath);
 
     boolean pathExists = workspaceRoot.getContainerForLocation(path).exists();
-
     if (!productProject.isAccessible() || !pathExists) {
       return new IContributionItem[] {new ConfContributionItem(null, null)};
     }
 
-    recursiveFindCFiles(allConfFiles, path, workspaceRoot);
+    // Configuration identification
+
+    final String confSelector =
+        p.getString(VinnBuildPreferenceConstants.P_STRING_CONF_SELECTOR).trim();
+    final Pattern confSelectorPattern =
+        java.util.regex.Pattern.compile(confSelector, Pattern.CASE_INSENSITIVE);
+
+    recursiveFind(allConfFiles, path, workspaceRoot, confSelectorPattern, 3, true);
 
     IContributionItem[] items = new IContributionItem[allConfFiles.size()];
     for (int i = 0; i < allConfFiles.size(); i++) {
@@ -61,25 +79,59 @@ public class ConfCompoundContributionItem extends CompoundContributionItem
         : new IContributionItem[] {new ConfContributionItem(null, null)};
   }
 
-  private static void recursiveFindCFiles(ArrayList<IResource> allCFiles, IPath path,
-      IWorkspaceRoot myWorkspaceRoot) {
+  private static void recursiveFind(ArrayList<IResource> allMatchingResources, IPath path,
+      IWorkspaceRoot myWorkspaceRoot, Pattern pattern, int depth, boolean includeFiltered) {
 
-    IContainer container = myWorkspaceRoot.getContainerForLocation(path);
-    IPreferenceStore p = Activator.getDefault().getPreferenceStore();
-    final String extension = p.getString(PreferenceConstants.P_STRING_CONF_DEFINE_REGEX).trim();
-
-    try {
-      IResource[] iResources;
-      iResources = container.members();
+    if (depth == 0 || allMatchingResources == null) {
+      return;
+    }
+    
+    IResourceFilterDescription[] tempFilters = null;
+    IContainer rootContainer = null;
+    IContainer container = null;
+    
+    try {      
+      container = myWorkspaceRoot.getContainerForLocation(path);
+      
+      if (includeFiltered) {
+        // Supports filter only where we put it (on the root / project)
+        rootContainer = container;
+        while (rootContainer.getType() != IResource.PROJECT) {
+          rootContainer = rootContainer.getParent();
+        }
+        tempFilters = rootContainer.getFilters();
+        for (IResourceFilterDescription i : tempFilters) {
+          i.delete(IResource.FORCE, null);          
+        }
+      }
+      
+      IResource[] iResources = container.members();
       for (IResource iR : iResources) {
-        if (extension.equalsIgnoreCase(iR.getFileExtension())) allCFiles.add(iR);
+        String pathAsString = iR.getProjectRelativePath().toString();
+        Matcher m = pattern.matcher(pathAsString);
+        if (m.find()) {
+          allMatchingResources.add(iR);
+        }
         if (iR.getType() == IResource.FOLDER) {
           IPath tempPath = iR.getLocation();
-          recursiveFindCFiles(allCFiles, tempPath, myWorkspaceRoot);
+          recursiveFind(allMatchingResources, tempPath, myWorkspaceRoot, pattern, (depth - 1), includeFiltered);
         }
       }
     } catch (CoreException e) {
       e.printStackTrace();
+    }
+    finally {
+      if (tempFilters != null && rootContainer != null) {
+          for (IResourceFilterDescription i : tempFilters) {
+            try {
+              rootContainer.createFilter(i.getType(), i.getFileInfoMatcherDescription(),
+                IResource.BACKGROUND_REFRESH, null);
+            } catch (CoreException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
+          }
+      }
     }
   }
 
@@ -88,6 +140,6 @@ public class ConfCompoundContributionItem extends CompoundContributionItem
 
   @Override
   public boolean isDirty() {
-    return mLastTimeStamp + 5000 < System.currentTimeMillis();
+    return true;
   }
 }

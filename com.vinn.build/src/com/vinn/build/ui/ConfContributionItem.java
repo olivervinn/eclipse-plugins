@@ -6,12 +6,15 @@ import org.eclipse.core.commands.Command;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.commands.NotEnabledException;
 import org.eclipse.core.commands.NotHandledException;
+import org.eclipse.core.commands.Parameterization;
+import org.eclipse.core.commands.ParameterizedCommand;
 import org.eclipse.core.commands.common.NotDefinedException;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -43,20 +46,22 @@ public class ConfContributionItem extends ContributionItem {
       menuItem.setText("None");
       menuItem.setEnabled(false);
     } else {
-      menuItem.setText(mValue.getName());
+      menuItem.setText(mValue.getProjectRelativePath().toOSString());
       menuItem.addSelectionListener(new SelectionAdapter() {
         public void widgetSelected(SelectionEvent e) {
           IHandlerService handlerService =
               (IHandlerService) PlatformUI.getWorkbench().getService(IHandlerService.class);
           IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
           ICommandService cmdService = (ICommandService) window.getService(ICommandService.class);
-
-          Command cmd = cmdService.getCommand("com.vinn.build.commands.applyConfiguration");
           HashMap<String, IResource> m = new HashMap<String, IResource>();
-          m.put("resource", mValue);
-
+          m.put("com.vinn.build.commandParameter1", mValue);
+          
+          Command cmd = cmdService.getCommand("com.vinn.build.commands.applyConfiguration");
+          ParameterizedCommand pcmd = ParameterizedCommand.generateCommand(cmd, m);
+          
           try {
-            handlerService.executeCommand(cmd.getId(), null);
+            handlerService.executeCommand(pcmd, null);
+            
           } catch (ExecutionException | NotDefinedException | NotEnabledException
               | NotHandledException e1) {
             // TODO Auto-generated catch block

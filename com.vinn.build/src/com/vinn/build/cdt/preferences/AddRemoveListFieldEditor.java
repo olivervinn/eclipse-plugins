@@ -1,4 +1,4 @@
-package com.vinn.build.preferences;
+package com.vinn.build.cdt.preferences;
 
 import java.util.*;
 

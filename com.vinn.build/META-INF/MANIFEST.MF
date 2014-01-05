@@ -12,3 +12,5 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  swing2swt.jar
+Import-Package: org.eclipse.jface.text,
+ org.eclipse.ui.texteditor
