@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.vinn.feature.utils"
+      label="Oliver Vinn Eclipse Utils"
+      version="1.0.0.qualifier"
+      provider-name="Oliver Vinn">
+
+   <description url="http://github.com/ovinn">
+      Collection of Eclispe Utility Plugins (Menu and Font Size Changer)
+   </description>
+
+   <copyright>
+      Oliver Vinn (2013, 2014)
+   </copyright>
+
+   <license url="http://choosealicense.com/licenses/eclipse/">
+      Eclipse Public License v1.0
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.ui"/>
+   </requires>
+
+   <plugin
+         id="com.vinn.ui.utils"
+         download-size="0"
+         install-size="0"
+         version="1.0.0.qualifier"
+         unpack="false"/>
+
+</feature>

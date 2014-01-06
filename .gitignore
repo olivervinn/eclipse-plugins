@@ -4,6 +4,10 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
+
+com.vinn.cdt.build/*.jar
+com.vinn.ui/*.jar
+com.vinn.feature/*.jar
+

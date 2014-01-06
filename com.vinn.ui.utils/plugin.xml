@@ -4,19 +4,19 @@
    <extension
          point="org.eclipse.ui.bindings">
       <key
-            commandId="vinn.font.adjust.command.increase"
+            commandId="com.vinn.font.adjust.command.increase"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+M2+=">
       </key>
       <key
-            commandId="vinn.font.adjust.command.decrease"
+            commandId="com.vinn.font.adjust.command.decrease"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+M2+-">
       </key>
       <key
-            commandId="vinn.font.adjust.command.reset"
+            commandId="com.vinn.font.adjust.command.reset"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+0">
@@ -27,19 +27,19 @@
       <command
             categoryId="org.eclipse.ui.category.views"
             defaultHandler="com.vinn.ui.utils.handlers.FontSizeChangeHandler"
-            id="vinn.font.adjust.command.increase"
+            id="com.vinn.font.adjust.command.increase"
             name="Vinn Increase Font">
       </command>
       <command
             categoryId="org.eclipse.ui.category.views"
             defaultHandler="com.vinn.ui.utils.handlers.FontSizeChangeHandler"
-            id="vinn.font.adjust.command.decrease"
+            id="com.vinn.font.adjust.command.decrease"
             name="Vinn Decrease Font">
       </command>
       <command
             categoryId="org.eclipse.ui.category.views"
             defaultHandler="com.vinn.ui.utils.handlers.FontSizeChangeHandler"
-            id="vinn.font.adjust.command.reset"
+            id="com.vinn.font.adjust.command.reset"
             name="Vinn Reset Font Size">
       </command>
    </extension>
@@ -67,29 +67,51 @@
                pattern=".*com.tetrade.eclipse.plugins.easyshell.command.*">
          </activityPatternBinding>
       <activity
-            id="com.vinn.ui.util.cleanup.activity"
-            name="Cleanup CDT Editor Menu">
+            id="com.vinn.ui.util.cleanup.basic.activity"
+            name="Cleanup CDT Basic Action Menu">
          <enabledWhen>
-           <with
-                 variable="activePart">
-                 <not>
-              <instanceof
-                    value="org.eclipse.ui.editors.text.TextEditor">
-              </instanceof>
-              </not>
-           </with>
+         <and>
+            <with
+                  variable="activePart">
+               <not>
+                  <instanceof
+                        value="org.eclipse.ui.editors.text.TextEditor">
+                  </instanceof>
+               </not>
+            </with>
+            <with
+                  variable="com.vinn.ui.utils.filterbasic.active">
+               <equals
+                        value="ENABLED">
+                  </equals>
+            </with>
+            </and>
          </enabledWhen>
       </activity>
       <activityPatternBinding
-            activityId="com.vinn.ui.util.cleanup.activity"
+            activityId="com.vinn.ui.util.cleanup.basic.activity"
             isEqualityPattern="true"
             pattern="org.eclipse.ui.edit.copy">
       </activityPatternBinding>
       <activityPatternBinding
-            activityId="com.vinn.ui.util.cleanup.activity"
+            activityId="com.vinn.ui.util.cleanup.basic.activity"
             isEqualityPattern="true"
             pattern="org.eclipse.ui.edit.paste">
       </activityPatternBinding>
+      <activity
+            id="com.vinn.ui.util.cleanup.activity"
+            name="Cleanup CDT Editor Menu">
+         <enabledWhen>
+            <with
+                  variable="activePart">
+               <not>
+                  <instanceof
+                        value="org.eclipse.ui.editors.text.TextEditor">
+                  </instanceof>
+               </not>
+            </with>
+         </enabledWhen>
+      </activity>
       <activityPatternBinding
             activityId="com.vinn.ui.util.cleanup.activity"
             isEqualityPattern="true"
@@ -213,6 +235,20 @@
             isEqualityPattern="false"
             pattern="org.epic.*">
       </activityPatternBinding> -->
+   </extension>
+   <extension
+         point="org.eclipse.ui.services">
+      <sourceProvider
+            provider="com.vinn.ui.utils.VinnUtilsActivityState">
+         <variable
+               name="com.vinn.ui.utils.filterbasic.active"
+               priorityLevel="workbench">
+         </variable>
+         <variable
+               name="com.vinn.ui.utils.filterother.active"
+               priorityLevel="workbench">
+         </variable>
+      </sourceProvider>
    </extension>
 
 </plugin>
