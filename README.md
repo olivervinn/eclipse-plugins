@@ -22,4 +22,5 @@ Environment
 
 Allows you to easily link and unlink C projects using dynamic references (those stored in the workspace rather than with the project) allowing the indexer to cross the project boundary.
 
-![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.build/images/environment.png)
+![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/environment.png)
+![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/tools.png)
