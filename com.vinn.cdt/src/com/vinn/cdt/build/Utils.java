@@ -20,11 +20,9 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.preference.IPreferenceStore;
 
 import com.vinn.cdt.preferences.VinnBuildPreferenceConstants;
-import com.vinn.cdt.ui.ConfContributionItem;
 
 public class Utils {
 

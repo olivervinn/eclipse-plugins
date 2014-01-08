@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.ui.AbstractSourceProvider;
-import org.eclipse.ui.ISources;
 
 public class VinnUtilsActivityState extends AbstractSourceProvider {
 
@@ -27,10 +26,10 @@ public class VinnUtilsActivityState extends AbstractSourceProvider {
     return new String[] { BASIC_STATE_ID, OTHER_STATE_ID };
   }
   
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings("rawtypes")
   @Override
   public Map getCurrentState() {
-    Map map = new HashMap(2);
+    Map<String, String> map = new HashMap<String, String>(2);
     map.put(BASIC_STATE_ID, (basicEnabled ? ENABLED : DISABLED));
     map.put(OTHER_STATE_ID, (otherEnabled ? ENABLED : DISABLED));
     return map;

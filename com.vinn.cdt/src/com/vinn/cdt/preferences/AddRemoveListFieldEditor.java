@@ -25,7 +25,6 @@ public class AddRemoveListFieldEditor extends FieldEditor {
   private static final String DEFAULT_SEPERATOR = ";";
 
   private static final int VERTICAL_DIALOG_UNITS_PER_CHAR = 8;
-  private static final int HORIZONTAL_DIALOG_UNITS_PER_CHAR = 4;
   private static final int LIST_HEIGHT_IN_CHARS = 10;
   private static final int LIST_HEIGHT_IN_DLUS = LIST_HEIGHT_IN_CHARS
       * VERTICAL_DIALOG_UNITS_PER_CHAR;
@@ -66,6 +65,7 @@ public class AddRemoveListFieldEditor extends FieldEditor {
   /**
    * @see org.eclipse.jface.preference.FieldEditor#doFillIntoGrid (Composite, int)
    */
+  @SuppressWarnings("deprecation")
   protected void doFillIntoGrid(Composite parent, int numColumns) {
     top = parent;
 

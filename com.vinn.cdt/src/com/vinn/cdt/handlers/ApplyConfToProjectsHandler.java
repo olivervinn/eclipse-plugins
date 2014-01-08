@@ -1,9 +1,5 @@
 package com.vinn.cdt.handlers;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,7 +9,6 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.model.CoreModel;
 import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.cdt.core.settings.model.CMacroEntry;
@@ -23,28 +18,18 @@ import org.eclipse.cdt.core.settings.model.ICLanguageSetting;
 import org.eclipse.cdt.core.settings.model.ICLanguageSettingEntry;
 import org.eclipse.cdt.core.settings.model.ICProjectDescription;
 import org.eclipse.cdt.core.settings.model.ICSettingEntry;
-import org.eclipse.cdt.core.settings.model.WriteAccessException;
-import org.eclipse.cdt.internal.core.indexer.StdoutLogService;
-import org.eclipse.cdt.internal.core.settings.model.CConfigurationDescription;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.FileInfoMatcherDescription;
-import org.eclipse.core.resources.IBuildConfiguration;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFilterMatcherDescriptor;
-import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceFilterDescription;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.preference.IPreferenceStore;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.handlers.HandlerUtil;
 
 import com.vinn.cdt.build.Activator;
 import com.vinn.cdt.build.Utils;
@@ -262,7 +247,7 @@ public class ApplyConfToProjectsHandler extends AbstractHandler {
 				activeCfg = pDescription.createConfiguration(CONFIGURATION_ID,
 						CONFIGURATION_NAME,
 						pDescription.getDefaultSettingConfiguration());
-			} catch (WriteAccessException | CoreException e1) {
+			} catch (CoreException e1) {
 				e1.printStackTrace();
 			}
 
