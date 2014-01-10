@@ -42,6 +42,11 @@
             id="com.vinn.font.adjust.command.reset"
             name="Vinn Reset Font Size">
       </command>
+      <command
+            defaultHandler="com.vinn.cdt.handlers.RemoveAllProblemMarkersHandler"
+            id="com.vinn.build.commands.removeproblems"
+            name="com.vinn.build.commands.removeproblems">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.activities">
@@ -249,6 +254,49 @@
                priorityLevel="workbench">
          </variable>
       </sourceProvider>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=com.vinn.build.environment.menu">
+         <menu
+               id="com.vinn.build.tools.menu"
+               label="Tools">
+            <command
+                  commandId="com.vinn.font.adjust.command.increase"
+                  defaultHandler="com.vinn.cdt.handlers.RemoveAllProblemMarkersHandler"
+                  id="com.vinn.font.adjust.command.increase.id"
+                  label="Grow Font"
+                  name="com.vinn.build.commands.removeproblems">
+            </command>
+            <command
+                  commandId="com.vinn.font.adjust.command.decrease"
+                  defaultHandler="com.vinn.ui.utils.handlers.FontSizeChangeHandler"
+                  id="com.vinn.font.adjust.command.decrease.id"
+                  label="Shrink Font"
+                  name="com.vinn.build.commands.removeproblems">
+            </command>
+            <command
+                  commandId="com.vinn.font.adjust.command.reset"
+                  defaultHandler="com.vinn.cdt.handlers.RemoveAllProblemMarkersHandler"
+                  id="com.vinn.font.adjust.command.reset.id"
+                  label="Normal Font"
+                  name="com.vinn.build.commands.removeproblems">
+            </command>
+            <separator
+                  name="com.vinn.ui.utils.separator5"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="com.vinn.build.commands.removeproblems"
+                  defaultHandler="com.vinn.cdt.handlers.RemoveAllProblemMarkersHandler"
+                  icon="icons/problems_view.gif"
+                  id="com.vinn.build.commands.removeproblems"
+                  label="Delete All Problem Markers"
+                  name="com.vinn.build.commands.removeproblems">
+            </command>
+         </menu>
+      </menuContribution>
    </extension>
 
 </plugin>

@@ -19,7 +19,7 @@ public class FontSizeChangeHandler extends AbstractHandler {
     } else if (event.getCommand().getId().endsWith(".decrease")) {
       changeFontSize(-1, true);
     } else {
-      changeFontSize(12, false);
+      changeFontSize(11, false);
     }
     return null;
   }

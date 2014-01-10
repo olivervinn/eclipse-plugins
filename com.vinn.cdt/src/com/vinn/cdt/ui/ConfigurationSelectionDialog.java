@@ -30,83 +30,80 @@ public class ConfigurationSelectionDialog extends FilteredItemsSelectionDialog {
     setTitle("Select Configuration");
     setInitialPattern("**");
     setListLabelProvider(new ILabelProvider() {
-      
+
       @Override
       public void removeListener(ILabelProviderListener listener) {
         // TODO Auto-generated method stub
-        
+
       }
-      
+
       @Override
       public boolean isLabelProperty(Object element, String property) {
         return true;
       }
-      
+
       @Override
       public void dispose() {
         // TODO Auto-generated method stub
-        
+
       }
-      
+
       @Override
       public void addListener(ILabelProviderListener listener) {
         // TODO Auto-generated method stub
-        
+
       }
-      
+
       @Override
       public String getText(Object element) {
         if (element != null)
-          return ((ConfigurationEntity)element).getConfRoot().getProjectRelativePath().toString();
+          return ((ConfigurationEntity) element).getConfRoot().getProjectRelativePath().toString();
         return "";
       }
-      
+
       @Override
       public Image getImage(Object element) {
-        return PlatformUI.getWorkbench().getSharedImages()
-            .getImage(ISharedImages.IMG_OBJ_ADD);
-      //return null;
+        return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ADD);
+        // return null;
       }
     });
-    
+
     setDetailsLabelProvider(new ILabelProvider() {
-      
+
       @Override
       public void removeListener(ILabelProviderListener listener) {
         // TODO Auto-generated method stub
-        
+
       }
-      
+
       @Override
       public boolean isLabelProperty(Object element, String property) {
         // TODO Auto-generated method stub
         return false;
       }
-      
+
       @Override
       public void dispose() {
         // TODO Auto-generated method stub
-        
+
       }
-      
+
       @Override
       public void addListener(ILabelProviderListener listener) {
         // TODO Auto-generated method stub
-        
+
       }
-      
+
       @Override
       public String getText(Object element) {
-        if (element == null)
-          return null;
-        ConfigurationEntity entity = (ConfigurationEntity)element;
+        if (element == null) return null;
+        ConfigurationEntity entity = (ConfigurationEntity) element;
         IResource r1 = entity.getDefinesFile();
         IResource r2 = entity.getFilterFile();
         return String.format("Define (%s) - Filter (%s)",
-          (r1 == null ? "Not found" : r1.getName()),
-          (r2 == null ? "Not found" : r2.getName()));
+            (r1 == null ? "Not found" : r1.getName()), (r2 == null ? "Not found" : r2.getName()));
       }
-      
+
       @Override
       public Image getImage(Object element) {
         // TODO Auto-generated method stub
@@ -119,7 +116,7 @@ public class ConfigurationSelectionDialog extends FilteredItemsSelectionDialog {
   protected Control createExtendedContentArea(Composite parent) {
     return null;
   }
-  
+
   private static final String SETTINGS = ConfigurationSelectionDialog.class.getCanonicalName();
 
   @Override
@@ -158,8 +155,9 @@ public class ConfigurationSelectionDialog extends FilteredItemsSelectionDialog {
     if (progressMonitor != null) {
       progressMonitor.beginTask("Finding configurations", IProgressMonitor.UNKNOWN);
     }
-    
-    List<ConfigurationEntity> allConfFiles = ConfigurationManager.getInstance().getConfigurationResources();
+
+    List<ConfigurationEntity> allConfFiles =
+        ConfigurationManager.getInstance().getConfigurationResources();
 
     for (int i = 0; i < allConfFiles.size(); i++) {
       ConfigurationEntity iResource = allConfFiles.get(i);
@@ -175,7 +173,7 @@ public class ConfigurationSelectionDialog extends FilteredItemsSelectionDialog {
     if (!(item instanceof ConfigurationEntity)) {
       return null;
     }
-    String r = ((ConfigurationEntity)item).getConfRoot().getProjectRelativePath().toString();
+    String r = ((ConfigurationEntity) item).getConfRoot().getProjectRelativePath().toString();
     return r;
   }
 
@@ -205,7 +203,8 @@ public class ConfigurationSelectionDialog extends FilteredItemsSelectionDialog {
     @Override
     public boolean matchItem(Object item) {
       if ((item instanceof ConfigurationEntity)) {
-        return super.matches(((ConfigurationEntity)item).getConfRoot().getProjectRelativePath().toString());
+        return super.matches(((ConfigurationEntity) item).getConfRoot().getProjectRelativePath()
+            .toString());
       }
       return false;
     }

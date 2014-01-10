@@ -116,13 +116,10 @@
                   label="Clear Configuration"
                   style="push">
             </command>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?after=com.vinn.build.environment.menu">
-         <menu
-               id="com.vinn.build.tools.menu"
-               label="Tools">
+            <separator
+                  name="com.vinn.build.separator2"
+                  visible="true">
+            </separator>
             <command
                   commandId="com.vinn.build.commands.indexer.rebuild"
                   label="Rebuild Indexes"
@@ -135,13 +132,13 @@
                   style="push">
             </command>
             <separator
-                  name="com.vinn.build.separator3"
+                  name="com.vinn.build.separator4"
                   visible="true">
             </separator>
             <command
                   commandId="com.vinn.build.commands.refreshall"
                   icon="platform:/plugin/org.eclipse.ui.ide/icons/full/elcl16/refresh_nav.gif"
-                  label="Refresh All Projects"
+                  label="Refresh Projects"
                   style="push">
             </command>
          </menu>

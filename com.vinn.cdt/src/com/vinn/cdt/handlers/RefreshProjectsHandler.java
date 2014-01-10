@@ -17,7 +17,7 @@ import com.vinn.cdt.build.Utils;
 public class RefreshProjectsHandler extends AbstractHandler {
 
   @Override
-  public Object execute(ExecutionEvent event) throws ExecutionException {   
+  public Object execute(ExecutionEvent event) throws ExecutionException {
 
     ICProject[] cProjects = Utils.getCProjects();
 
@@ -28,6 +28,6 @@ public class RefreshProjectsHandler extends AbstractHandler {
         e.printStackTrace();
       }
     }
-  return null;
+    return null;
   }
 }

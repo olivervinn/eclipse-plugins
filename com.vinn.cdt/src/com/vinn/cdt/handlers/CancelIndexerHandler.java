@@ -13,7 +13,7 @@ import org.eclipse.core.commands.ExecutionException;
 public class CancelIndexerHandler extends AbstractHandler {
 
   @Override
-  public Object execute(ExecutionEvent event) throws ExecutionException {   
+  public Object execute(ExecutionEvent event) throws ExecutionException {
     CCoreInternals.getPDOMManager().shutdown();
     CCoreInternals.getPDOMManager().startup();
     return null;

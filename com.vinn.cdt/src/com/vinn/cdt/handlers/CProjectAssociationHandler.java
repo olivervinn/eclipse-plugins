@@ -42,13 +42,14 @@ public class CProjectAssociationHandler extends AbstractHandler {
       }
       MessageDialogWithToggle userConfirmation =
           MessageDialogWithToggle.openOkCancelConfirm(window.getShell(),
-              "Confirm Project Association", 
-              String.format("Found %d projects. Do you want to continue to %s these projects?\n%s", 
-                cProjects.length, (isUnlink ? "unlink" : "link"), pNames),
+              "Confirm Project Association", String.format(
+                  "Found %d projects. Do you want to continue to %s these projects?\n%s",
+                  cProjects.length, (isUnlink ? "unlink" : "link"), pNames),
               "Don't prompt me again", false, null, null);
 
       continueWithLink = userConfirmation.getReturnCode() == MessageDialogWithToggle.OK;
-      p.setValue(VinnBuildPreferenceConstants.P_HIDE_LINK_CONFIRMATION, userConfirmation.getToggleState());
+      p.setValue(VinnBuildPreferenceConstants.P_HIDE_LINK_CONFIRMATION,
+          userConfirmation.getToggleState());
     }
 
     if (continueWithLink) {
@@ -60,7 +61,7 @@ public class CProjectAssociationHandler extends AbstractHandler {
 
   private void linkUnlinkProjects(boolean unlink, ICProject[] cProjectsA) {
 
-    String t="";
+    String t = "";
     IProject[] cProjectsB = new IProject[cProjectsA.length - 1];
     for (int i = 0; i < cProjectsA.length; i++) {
       IProject masterCProj = cProjectsA[i].getProject();
@@ -84,7 +85,7 @@ public class CProjectAssociationHandler extends AbstractHandler {
       } catch (CoreException e) {
         e.printStackTrace();
       }
-      
+
       t += masterCProj.getName() + " ";
     }
 
@@ -92,9 +93,11 @@ public class CProjectAssociationHandler extends AbstractHandler {
     for (int i = 0; i < cProjectsA.length; i++) {
       CCorePlugin.getIndexManager().reindex(cProjectsA[i]);
     }
-    
-    StatusManager.getManager().handle(
-      new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format("Associated projects (%s)",t)));
+
+    StatusManager.getManager()
+        .handle(
+            new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format("Associated projects (%s)",
+                t)));
   }
 
 }

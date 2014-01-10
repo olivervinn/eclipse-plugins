@@ -16,7 +16,9 @@ import com.vinn.cdt.build.Activator;
  * preference store.
  */
 
-public class VinnBuildPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+public class VinnBuildPreferencePage extends FieldEditorPreferencePage
+    implements
+      IWorkbenchPreferencePage {
 
   public VinnBuildPreferencePage() {
     super(GRID);
@@ -34,48 +36,49 @@ public class VinnBuildPreferencePage extends FieldEditorPreferencePage implement
     addField(new BooleanFieldEditor(VinnBuildPreferenceConstants.P_HIDE_LINK_CONFIRMATION,
         "&Hide link confirmation dialog", getFieldEditorParent()));
     addField(new SpacerFieldEditor(getFieldEditorParent()));
-    addField(new AddRemoveListFieldEditor(VinnBuildPreferenceConstants.P_EXCLUDED_PROJECT_NAME_ENDINGS,
+    addField(new AddRemoveListFieldEditor(
+        VinnBuildPreferenceConstants.P_EXCLUDED_PROJECT_NAME_ENDINGS,
         "List of project name endings to ignore", getFieldEditorParent()));
-    
-    
+
+
     addField(new SpacerFieldEditor(getFieldEditorParent()));
-    
+
     // build
-    
+
     addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_PROJECT_NAME,
-      "Config project name", getFieldEditorParent()));
-    
+        "Config project name", getFieldEditorParent()));
+
     // out/
     addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_PROJECT_PATH,
-      "Base path to search", getFieldEditorParent()));
-    
+        "Base path to search", getFieldEditorParent()));
+
     // 2
     addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_PROJECT_DEPTH,
-      "Search depth", getFieldEditorParent()));
-        
+        "Search depth", getFieldEditorParent()));
+
     // \w+/\w+/ (e.g. product/part/ for a folder selector)
     // \w+/\w+/config.txt (e.g. product/part/ for a folder-file selector)
-    
+
     addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_SELECTOR,
         "Config file selector", getFieldEditorParent()));
-    
+
     // From path where the config was found
     // e.g. product/part/cc_opts.txt
-    
+
     addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_DEFINE_FILE_SELECTOR,
-      "C Define file selector", getFieldEditorParent()));
-    
+        "C Define file selector", getFieldEditorParent()));
+
     addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_DEFINE_EXTRACTOR,
-      "C Define extractor", getFieldEditorParent()));
-    
+        "C Define extractor", getFieldEditorParent()));
+
     addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_FOLDER_FILE_SELECTOR,
-      "Folder include file selector", getFieldEditorParent()));
-    
+        "Folder include file selector", getFieldEditorParent()));
+
     addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_FOLDER_EXTRACTOR,
-      "Folder include extractor", getFieldEditorParent()));
-    
+        "Folder include extractor", getFieldEditorParent()));
+
     addField(new SpacerFieldEditor(getFieldEditorParent()));
-   
+
   }
 
   /*

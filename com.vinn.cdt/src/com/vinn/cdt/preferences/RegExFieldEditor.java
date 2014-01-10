@@ -27,13 +27,13 @@ public class RegExFieldEditor extends StringFieldEditor {
   // Fills the field editor's controls into the given parent.
   protected void doFillIntoGrid(Composite parent, int numColumns) {
     super.doFillIntoGrid(parent, numColumns);
-    
+
     // Create the find content assist field
     contentAdapter = new ComboContentAdapter();
     FindReplaceDocumentAdapterContentProposalProvider findProposer =
         new FindReplaceDocumentAdapterContentProposalProvider(true);
     Text tControl = getTextControl();
-    //fFindField = new Combo(panel, SWT.DROP_DOWN | SWT.BORDER);
+    // fFindField = new Combo(panel, SWT.DROP_DOWN | SWT.BORDER);
     fContentAssistFindField =
         new ContentAssistCommandAdapter(tControl, contentAdapter, findProposer,
             ITextEditorActionDefinitionIds.CONTENT_ASSIST_PROPOSALS, new char[0], true);

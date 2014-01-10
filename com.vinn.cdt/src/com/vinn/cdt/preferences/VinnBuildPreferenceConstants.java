@@ -6,7 +6,7 @@ package com.vinn.cdt.preferences;
 public class VinnBuildPreferenceConstants {
 
   public static final String P_HIDE_LINK_CONFIRMATION = "com.build.link.hidePromptOnLinkChange";
-  
+
   public static final String P_EXCLUDED_PROJECT_NAME_ENDINGS =
       "com.build.link.excludedProjectNameEndings";
 
@@ -19,7 +19,8 @@ public class VinnBuildPreferenceConstants {
   public static final String P_STRING_CONF_DEFINE_FILE_SELECTOR = "com.build.conf.defineSelector";
   public static final String P_STRING_CONF_DEFINE_EXTRACTOR = "com.build.conf.defineExtractor";
 
-  public static final String P_STRING_CONF_FOLDER_FILE_SELECTOR = "com.build.conf.folderFileSelector";
+  public static final String P_STRING_CONF_FOLDER_FILE_SELECTOR =
+      "com.build.conf.folderFileSelector";
   public static final String P_STRING_CONF_FOLDER_EXTRACTOR = "com.build.conf.folderExtractor";
 
 }

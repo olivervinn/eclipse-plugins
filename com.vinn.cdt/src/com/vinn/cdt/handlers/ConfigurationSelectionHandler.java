@@ -33,7 +33,7 @@ public class ConfigurationSelectionHandler extends AbstractHandler {
       IRunnableWithProgress operation = new IRunnableWithProgress() {
         public void run(IProgressMonitor monitor) {
           Object[] profiles = dialog.getResult();
-          ConfigurationManager.getInstance().apply((ConfigurationEntity)profiles[0]);
+          ConfigurationManager.getInstance().apply((ConfigurationEntity) profiles[0]);
           Utils.rebuildCIndex();
         }
       };

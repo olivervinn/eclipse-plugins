@@ -39,13 +39,13 @@ import com.vinn.cdt.preferences.VinnBuildPreferenceConstants;
 public class ConfigurationManager {
 
   private static volatile ConfigurationManager instance = null;
-    
+
   public static final String CONFIGURATION_ID = "com.vinn.build.dynamiccconfig";
   public static final String CONFIGURATION_NAME = "[Vinn Dynamic Configuration]";
 
   private IPreferenceStore prf;
   private List<ConfigurationEntity> fConfigurationEntities;
-  private ConfigurationEntity fActiveConfigurationEntity;  
+  private ConfigurationEntity fActiveConfigurationEntity;
 
   public class ConfigurationEntity {
     private IResource fRoot;
@@ -70,11 +70,11 @@ public class ConfigurationManager {
       fFilterFile = filter;
     }
   }
-  
+
   public ConfigurationManager() {
     prf = Activator.getDefault().getPreferenceStore();
   }
-  
+
   public static ConfigurationManager getInstance() {
     if (instance == null) {
       synchronized (ConfigurationManager.class) {
@@ -85,30 +85,31 @@ public class ConfigurationManager {
     }
     return instance;
   }
-  
+
   public void remove() {
     fActiveConfigurationEntity = null;
     setEnvironmentWithText(null, null);
     removeResourceFiltersFromAllProjects();
     StatusManager.getManager().handle(
         new Status(IStatus.INFO, Activator.PLUGIN_ID, "Removed configuration"));
-    
+
   }
 
   public Object apply(ConfigurationEntity entity) {
-    
+
     if (entity == null) {
       remove();
     } else {
       if (fConfigurationEntities != null)
         if (fConfigurationEntities.contains(entity)) {
-        fActiveConfigurationEntity = entity;
-      } else {
-        fConfigurationEntities.add(entity);
-        fActiveConfigurationEntity = entity;
-      } else {
+          fActiveConfigurationEntity = entity;
+        } else {
+          fConfigurationEntities.add(entity);
+          fActiveConfigurationEntity = entity;
+        }
+      else {
         StatusManager.getManager().handle(
-          new Status(IStatus.INFO, Activator.PLUGIN_ID, "Bad configuration state"));
+            new Status(IStatus.INFO, Activator.PLUGIN_ID, "Bad configuration state"));
         return null;
       }
 
@@ -128,9 +129,11 @@ public class ConfigurationManager {
       if (foundResource != null) {
         setEnvrionmentWithCDefineFile((IFile) foundResource, cDefineExtractor);
       } else {
-        StatusManager.getManager().handle(
-            new Status(IStatus.ERROR, Activator.PLUGIN_ID, String.format(
-                "Unable to find a defines file in (%s)", fActiveConfigurationEntity.getConfRoot())));
+        StatusManager.getManager()
+            .handle(
+                new Status(IStatus.ERROR, Activator.PLUGIN_ID, String.format(
+                    "Unable to find a defines file in (%s)",
+                    fActiveConfigurationEntity.getConfRoot())));
       }
 
       final String folderFilterExtractor =
@@ -214,7 +217,7 @@ public class ConfigurationManager {
     }
 
     // Filters should have been removed by time we are here and active project set
-    
+
     ICProject[] projects = Utils.getCProjects();
     IContainer activeConfigProjContainer = getActiceConfiguration().getConfRoot().getProject();
 
@@ -224,7 +227,7 @@ public class ConfigurationManager {
             new FileInfoMatcherDescription("org.eclipse.ui.ide.multiFilter", String.format(
                 "1.0-projectRelativePath-matches-false-true-%s", entity.getConfRoot()
                     .getProjectRelativePath().toString()));
-        
+
         try {
           activeConfigProjContainer.createFilter(IResourceFilterDescription.EXCLUDE_ALL
               | IResourceFilterDescription.FOLDERS | IResourceFilterDescription.INHERITABLE,
@@ -234,10 +237,9 @@ public class ConfigurationManager {
         }
       }
     }
-    
+
     StatusManager.getManager().handle(
-      new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-          "Applied filter on configs")));
+        new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format("Applied filter on configs")));
 
     if (projectNames.size() > 0) {
       for (ICProject icProject : projects) {
@@ -260,15 +262,15 @@ public class ConfigurationManager {
         }
       }
       StatusManager.getManager().handle(
-        new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
-            "Applied project resource filters (%d)", projectNames.size())));
+          new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format(
+              "Applied project resource filters (%d)", projectNames.size())));
     }
   }
 
   public ConfigurationEntity getActiceConfiguration() {
     return fActiveConfigurationEntity;
   }
-  
+
   public List<ConfigurationEntity> getConfigurationResources() {
 
     // Find Environment *.confs the parameter is the IResource
@@ -299,36 +301,35 @@ public class ConfigurationManager {
         p.getString(VinnBuildPreferenceConstants.P_STRING_CONF_SELECTOR).trim();
     final Pattern confSelectorPattern =
         java.util.regex.Pattern.compile(confSelector, Pattern.CASE_INSENSITIVE);
-    
-    
+
+
     IResourceFilterDescription[] tempFilters = null;
-    
-     try {
-        tempFilters = confHomeProject.getFilters();
-        for (IResourceFilterDescription i : tempFilters) {
-          i.delete(IResource.FORCE, null);
-        }
-      } catch (CoreException e) {
-    }
-     
+
+    try {
+      tempFilters = confHomeProject.getFilters();
+      for (IResourceFilterDescription i : tempFilters) {
+        i.delete(IResource.FORCE, null);
+      }
+    } catch (CoreException e) {}
+
     List<IResource> foundConfigRoots = new ArrayList<IResource>();
     Utils.FindResourceInTree(foundConfigRoots, path, workspaceRoot, confSelectorPattern, 3);
-  
+
     fConfigurationEntities = new ArrayList<ConfigurationEntity>();
     for (IResource r : foundConfigRoots) {
       fConfigurationEntities.add(new ConfigurationEntity(r, findDefineFile(r), findFilterFile(r)));
     }
-    
+
     if (tempFilters != null) {
       for (IResourceFilterDescription i : tempFilters) {
         try {
           confHomeProject.createFilter(i.getType(), i.getFileInfoMatcherDescription(),
-            IResource.BACKGROUND_REFRESH, null);
+              IResource.BACKGROUND_REFRESH, null);
         } catch (CoreException e) {
           e.printStackTrace();
         }
       }
-  }
+    }
 
     fActiveConfigurationEntity = null;
     return fConfigurationEntities;

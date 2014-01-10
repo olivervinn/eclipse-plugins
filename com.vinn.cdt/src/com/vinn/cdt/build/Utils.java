@@ -22,8 +22,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import com.vinn.cdt.preferences.VinnBuildPreferenceConstants;
 
 public class Utils {
-  
-  
+
+
   public static void rebuildCIndex() {
     ICProject[] cProjects = Utils.getCProjects();
     for (int i = 0; i < cProjects.length; i++) {
@@ -53,7 +53,7 @@ public class Utils {
       return null;
     }
   }
-  
+
   public static boolean isProjectNameExcluded(String name) {
     IPreferenceStore p = Activator.getDefault().getPreferenceStore();
     final String[] excludedEndings =
@@ -64,66 +64,63 @@ public class Utils {
 
     return false;
   }
-  
+
 
   public static void FindResourceInTree(List<IResource> matchingResources, IPath path,
-	      IWorkspaceRoot myWorkspaceRoot, Pattern pattern, int depth) {
+      IWorkspaceRoot myWorkspaceRoot, Pattern pattern, int depth) {
 
-	    if (depth == 0) {
-	      return;
-	    }
+    if (depth == 0) {
+      return;
+    }
 
-	    IContainer container = null;
+    IContainer container = null;
 
-	    try {
-	      container = myWorkspaceRoot.getContainerForLocation(path);
-	      if (container == null)
-	        return;
+    try {
+      container = myWorkspaceRoot.getContainerForLocation(path);
+      if (container == null) return;
 
-	      IResource[] iResources = container.members();
-	      for (IResource iR : iResources) {
-	        String pathAsString = iR.getProjectRelativePath().toString();
-	        Matcher m = pattern.matcher(pathAsString);
-	        if (m.find()) {
-	          matchingResources.add(iR);
-	        }
-	        if (iR.getType() == IResource.FOLDER) {
-	          IPath tempPath = iR.getLocation();
-	          FindResourceInTree(matchingResources, tempPath, myWorkspaceRoot, pattern, (depth - 1));
-	        }
-	      }
-	    } catch (CoreException e) {
-	      e.printStackTrace();
-	    }
-	    finally {
-	    }
-	  }
-  
-  public static String readTextFile(IFile file) {
-	// Open file and parse out the defines e.g. -DOPTION=value
-	String text = "";
-	BufferedReader br;
-	try {
-		br = new BufferedReader(new InputStreamReader(file.getContents()));
-		StringBuilder sb = new StringBuilder();
-		String line = br.readLine();
-
-		while (line != null) {
-			sb.append(line);
-			sb.append('\n');
-			line = br.readLine();
-		}
-		sb.append('\n'); // Always end with a new line so expressions are
-							// not fooled
-		br.close();
-		text = sb.toString();
-
-	} catch (Exception e) {
-	  text = "";
-	}
-	
-	return text;
+      IResource[] iResources = container.members();
+      for (IResource iR : iResources) {
+        String pathAsString = iR.getProjectRelativePath().toString();
+        Matcher m = pattern.matcher(pathAsString);
+        if (m.find()) {
+          matchingResources.add(iR);
+        }
+        if (iR.getType() == IResource.FOLDER) {
+          IPath tempPath = iR.getLocation();
+          FindResourceInTree(matchingResources, tempPath, myWorkspaceRoot, pattern, (depth - 1));
+        }
+      }
+    } catch (CoreException e) {
+      e.printStackTrace();
+    } finally {}
   }
-  
-	
+
+  public static String readTextFile(IFile file) {
+    // Open file and parse out the defines e.g. -DOPTION=value
+    String text = "";
+    BufferedReader br;
+    try {
+      br = new BufferedReader(new InputStreamReader(file.getContents()));
+      StringBuilder sb = new StringBuilder();
+      String line = br.readLine();
+
+      while (line != null) {
+        sb.append(line);
+        sb.append('\n');
+        line = br.readLine();
+      }
+      sb.append('\n'); // Always end with a new line so expressions are
+      // not fooled
+      br.close();
+      text = sb.toString();
+
+    } catch (Exception e) {
+      text = "";
+    }
+
+    return text;
+  }
+
+
 }
