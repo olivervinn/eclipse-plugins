@@ -4,8 +4,6 @@
 
 package com.vinn.cdt.handlers;
 
-import org.eclipse.cdt.core.CCorePlugin;
-import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -24,11 +22,7 @@ public class RebuildIndexerHandler extends AbstractHandler {
     Job job = new Job("Rebuild Index For All Projects") {
       @Override
       protected IStatus run(IProgressMonitor monitor) {
-
-        ICProject[] cProjects = Utils.getCProjects();
-        for (int i = 0; i < cProjects.length; i++) {
-          CCorePlugin.getIndexManager().reindex(cProjects[i]);
-        }
+        Utils.rebuildCIndex();
         monitor.done();
         return Status.OK_STATUS;
       }

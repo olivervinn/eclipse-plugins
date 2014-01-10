@@ -12,10 +12,13 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 import com.vinn.cdt.build.Activator;
 import com.vinn.cdt.build.Utils;
@@ -40,7 +43,7 @@ public class CProjectAssociationHandler extends AbstractHandler {
       MessageDialogWithToggle userConfirmation =
           MessageDialogWithToggle.openOkCancelConfirm(window.getShell(),
               "Confirm Project Association", 
-              String.format("Found %d projects. Continue to dynamically %s?\n%s", 
+              String.format("Found %d projects. Do you want to continue to %s these projects?\n%s", 
                 cProjects.length, (isUnlink ? "unlink" : "link"), pNames),
               "Don't prompt me again", false, null, null);
 
@@ -57,6 +60,7 @@ public class CProjectAssociationHandler extends AbstractHandler {
 
   private void linkUnlinkProjects(boolean unlink, ICProject[] cProjectsA) {
 
+    String t="";
     IProject[] cProjectsB = new IProject[cProjectsA.length - 1];
     for (int i = 0; i < cProjectsA.length; i++) {
       IProject masterCProj = cProjectsA[i].getProject();
@@ -80,12 +84,17 @@ public class CProjectAssociationHandler extends AbstractHandler {
       } catch (CoreException e) {
         e.printStackTrace();
       }
+      
+      t += masterCProj.getName() + " ";
     }
 
     // Now we freshen the Indexer so it can resolve across projects.
     for (int i = 0; i < cProjectsA.length; i++) {
       CCorePlugin.getIndexManager().reindex(cProjectsA[i]);
     }
+    
+    StatusManager.getManager().handle(
+      new Status(IStatus.INFO, Activator.PLUGIN_ID, String.format("Associated projects (%s)",t)));
   }
 
 }

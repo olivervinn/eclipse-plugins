@@ -24,7 +24,7 @@
       </command>
       <command
             categoryId="com.vinn.eclipse.build.commands.category"
-            defaultHandler="com.vinn.cdt.handlers.ApplyConfToProjectsHandler"
+            defaultHandler="com.vinn.cdt.handlers.ConfigurationClearHandler"
             id="com.vinn.build.commands.applyconfig"
             name="com.vinn.build.commands.applyconfig">
          <commandParameter
@@ -36,7 +36,7 @@
       </command>
       <command
             categoryId="com.vinn.eclipse.build.commands.category"
-            defaultHandler="com.vinn.cdt.handlers.ApplyConfToProjectsHandler"
+            defaultHandler="com.vinn.cdt.handlers.ConfigurationClearHandler"
             id="com.vinn.build.commands.clearconfig"
             name="com.vinn.build.commands.clearconfig">
          <commandParameter
@@ -60,6 +60,11 @@
             defaultHandler="com.vinn.cdt.handlers.RefreshProjectsHandler"
             id="com.vinn.build.commands.refreshall"
             name="com.vinn.build.commands.refreshall">
+      </command>
+      <command
+            defaultHandler="com.vinn.cdt.handlers.ConfigurationSelectionHandler"
+            id="com.vinn.cdt.selectconf"
+            name="name">
       </command>
    </extension>
    <extension
@@ -101,13 +106,11 @@
                   name="com.vinn.build.separator1"
                   visible="true">
             </separator>
-            <menu
-                  label="Set Configuration">
-               <dynamic
-                     class="com.vinn.cdt.ui.ConfCompoundContributionItem"
-                     id="com.vinn.build.dynamic.confs">
-               </dynamic>
-            </menu>
+            <command
+                  commandId="com.vinn.cdt.selectconf"
+                  label="Select Configuration"
+                  style="push">
+            </command>
             <command
                   commandId="com.vinn.build.commands.clearconfig"
                   label="Clear Configuration"

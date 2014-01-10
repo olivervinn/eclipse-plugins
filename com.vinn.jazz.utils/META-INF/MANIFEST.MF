@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Oliver Vinn Jazz Remote Change Checker
+Bundle-SymbolicName: com.vinn.jazz.utils;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.vinn.jazz.utils.Activator
+Bundle-Vendor: Oliver Vinn
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.ibm.team.filesystem.rcp.core,
+ com.ibm.team.repository.common,
+ com.ibm.team.repository.client
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
