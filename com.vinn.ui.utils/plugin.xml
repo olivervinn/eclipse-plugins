@@ -43,7 +43,7 @@
             name="Vinn Reset Font Size">
       </command>
       <command
-            defaultHandler="com.vinn.cdt.handlers.RemoveAllProblemMarkersHandler"
+            defaultHandler="com.vinn.ui.utils.handlers.RemoveAllProblemMarkersHandler"
             id="com.vinn.build.commands.removeproblems"
             name="com.vinn.build.commands.removeproblems">
       </command>
@@ -291,7 +291,7 @@
                   commandId="com.vinn.build.commands.removeproblems"
                   defaultHandler="com.vinn.cdt.handlers.RemoveAllProblemMarkersHandler"
                   icon="icons/problems_view.gif"
-                  id="com.vinn.build.commands.removeproblems"
+                  id="com.vinn.build.commands.removeproblems.id"
                   label="Delete All Problem Markers"
                   name="com.vinn.build.commands.removeproblems">
             </command>
