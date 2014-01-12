@@ -290,12 +290,18 @@ public class ConfigurationManager {
         p.getString(VinnBuildPreferenceConstants.P_STRING_CONF_PROJECT_PATH).trim();
 
     IProject confHomeProject = workspaceRoot.getProject(projectName);
-    IPath path = confHomeProject.getLocation().append(projectPath);
-
-    boolean pathExists = workspaceRoot.getContainerForLocation(path).exists();
-    if (!confHomeProject.isAccessible() || !pathExists) {
+    
+    if (!confHomeProject.isAccessible() || 
+        confHomeProject.getLocation() == null) {
       return fConfigurationEntities;
     }
+    
+    IPath path = confHomeProject.getLocation().append(projectPath);
+    if (!workspaceRoot.getContainerForLocation(path).exists()) {
+      return fConfigurationEntities;
+    }
+    
+    
 
     // Configuration identification
 
