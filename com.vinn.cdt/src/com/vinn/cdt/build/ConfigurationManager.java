@@ -272,6 +272,8 @@ public class ConfigurationManager {
   }
 
   public List<ConfigurationEntity> getConfigurationResources() {
+    
+    fConfigurationEntities = new ArrayList<ConfigurationEntity>();
 
     // Find Environment *.confs the parameter is the IResource
     // this is used later to extract the presentation name as well
@@ -292,7 +294,7 @@ public class ConfigurationManager {
 
     boolean pathExists = workspaceRoot.getContainerForLocation(path).exists();
     if (!confHomeProject.isAccessible() || !pathExists) {
-      return null;
+      return fConfigurationEntities;
     }
 
     // Configuration identification
@@ -315,7 +317,7 @@ public class ConfigurationManager {
     List<IResource> foundConfigRoots = new ArrayList<IResource>();
     Utils.FindResourceInTree(foundConfigRoots, path, workspaceRoot, confSelectorPattern, 3);
 
-    fConfigurationEntities = new ArrayList<ConfigurationEntity>();
+    
     for (IResource r : foundConfigRoots) {
       fConfigurationEntities.add(new ConfigurationEntity(r, findDefineFile(r), findFilterFile(r)));
     }
