@@ -11,8 +11,12 @@ A collection of plugins for Eclipse and CDT.
 * Refresh all project resources
 * Cross project configuration selector (CDT)
 
-![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/environment.png)
+
 ![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.utils/images/tools.png)
+
+![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/environment.png)
+
+
 
 
 Font Size changer 
@@ -50,7 +54,7 @@ Newer versions of Eclipse have better change detection but for others and someti
 
 Cross project configuration selector
 ==
-If you have an output that describes you C defines and a way to identify the 
+If you have an output that captures the C defines and a way to identify the 
 different configurations (be it 1) you may be able to use this to set the c
 defines in all projects.
 
@@ -60,9 +64,9 @@ Tested with a folder hierarchy indicating a configuration, under which files
 can be found to parse out the C defines.
 
 On selecting the configuration in addition to setting the defines the plugin
-will use resource filters to remove the other configurations.
+will use resource filters to remove the other unused configuration resources from view.
 
-Further if you have a file that lists folders not used by the configuration
+Further if you have a file that lists additional folders not used by the configuration
 it can be parsed and those will be removed also.
 
 Finally the C indexer is rebuilt on all projects.
