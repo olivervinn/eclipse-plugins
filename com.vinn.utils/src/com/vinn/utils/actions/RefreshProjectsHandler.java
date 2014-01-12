@@ -2,16 +2,15 @@
  * Copyright Oliver Vinn 2013
  */
 
-package com.vinn.cdt.handlers;
+package com.vinn.utils.actions;
 
-import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-
-import com.vinn.cdt.build.Utils;
 
 
 public class RefreshProjectsHandler extends AbstractHandler {
@@ -19,11 +18,11 @@ public class RefreshProjectsHandler extends AbstractHandler {
   @Override
   public Object execute(ExecutionEvent event) throws ExecutionException {
 
-    ICProject[] cProjects = Utils.getCProjects();
+    IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
 
-    for (int i = 0; i < cProjects.length; i++) {
+    for (int i = 0; i < projects.length; i++) {
       try {
-        cProjects[i].getProject().refreshLocal(IResource.DEPTH_INFINITE, null);
+        projects[i].refreshLocal(IResource.DEPTH_INFINITE, null);
       } catch (CoreException e) {
         e.printStackTrace();
       }

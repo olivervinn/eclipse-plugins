@@ -57,14 +57,9 @@
             name="com.vinn.build.commands.indexer.rebuild">
       </command>
       <command
-            defaultHandler="com.vinn.cdt.handlers.RefreshProjectsHandler"
-            id="com.vinn.build.commands.refreshall"
-            name="com.vinn.build.commands.refreshall">
-      </command>
-      <command
             defaultHandler="com.vinn.cdt.handlers.ConfigurationSelectionHandler"
             id="com.vinn.cdt.selectconf"
-            name="name">
+            name="com.vinn.cdt.selectconf">
       </command>
    </extension>
    <extension
@@ -88,8 +83,7 @@
             locationURI="menu:org.eclipse.ui.main.menu?after=project">
          <menu
                id="com.vinn.build.environment.menu"
-               label="Environment"
-               tooltip="Settings affecting all projects">
+               label="Environment">
             <command
                   commandId="com.vinn.build.commands.cprojects.link"
                   icon="icons/elements_obj.gif"
@@ -129,16 +123,6 @@
                   commandId="com.vinn.build.commands.indexer.cancel"
                   icon="icons/stop.gif"
                   label="Cancel Indexer"
-                  style="push">
-            </command>
-            <separator
-                  name="com.vinn.build.separator4"
-                  visible="true">
-            </separator>
-            <command
-                  commandId="com.vinn.build.commands.refreshall"
-                  icon="platform:/plugin/org.eclipse.ui.ide/icons/full/elcl16/refresh_nav.gif"
-                  label="Refresh Projects"
                   style="push">
             </command>
          </menu>

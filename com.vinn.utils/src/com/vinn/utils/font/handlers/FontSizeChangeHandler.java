@@ -1,25 +1,31 @@
-package com.vinn.ui.utils.handlers;
+package com.vinn.utils.font.handlers;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.preferences.IPreferencesService;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.graphics.FontData;
 import org.osgi.service.prefs.BackingStoreException;
 import org.osgi.service.prefs.Preferences;
 
+import com.vinn.utils.Activator;
+import com.vinn.utils.font.preferences.VinnFontUtilsPreferenceConstants;
+
 public class FontSizeChangeHandler extends AbstractHandler {
 
   @Override
   public Object execute(ExecutionEvent event) throws ExecutionException {
+    IPreferenceStore p = Activator.getDefault().getPreferenceStore();
+    
     if (event.getCommand().getId().endsWith(".increase")) {
-      changeFontSize(1, true);
+      changeFontSize(p.getInt(VinnFontUtilsPreferenceConstants.P_STRING_FONT_STEP), true);
     } else if (event.getCommand().getId().endsWith(".decrease")) {
-      changeFontSize(-1, true);
+      changeFontSize(-p.getInt(VinnFontUtilsPreferenceConstants.P_STRING_FONT_STEP), true);
     } else {
-      changeFontSize(11, false);
+      changeFontSize(p.getInt(VinnFontUtilsPreferenceConstants.P_STRING_FONT_RESETSIZE), false);
     }
     return null;
   }

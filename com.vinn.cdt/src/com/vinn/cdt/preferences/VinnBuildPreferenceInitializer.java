@@ -28,12 +28,11 @@ public class VinnBuildPreferenceInitializer extends AbstractPreferenceInitialize
     store.setDefault(VinnBuildPreferenceConstants.P_STRING_CONF_DEFINE_FILE_SELECTOR,
         ".*_opt_cc.txt$");
     store.setDefault(VinnBuildPreferenceConstants.P_STRING_CONF_DEFINE_EXTRACTOR,
-        "-D(\\w+)=[\\\"]{0,1}(.*?)[\\\"]{0,1}\\s+");
+        "-D(\\w+)[=]{0,1}[\\\"]{0,1}(.*?)[\\\"]{0,1}\\s+");
     store.setDefault(VinnBuildPreferenceConstants.P_STRING_CONF_FOLDER_FILE_SELECTOR,
         ".*_bfolders.txt$");
     store.setDefault(VinnBuildPreferenceConstants.P_STRING_CONF_FOLDER_EXTRACTOR,
         "-../(\\w+)/([^\\s\\n]+)");
-
   }
 
 }

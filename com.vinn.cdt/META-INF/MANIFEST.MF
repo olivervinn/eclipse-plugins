@@ -11,6 +11,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.views
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .
-Import-Package: org.eclipse.jface.text,
+Import-Package: com.vinn.utils.preferences,
+ org.eclipse.jface.text,
  org.eclipse.ui.texteditor
 Bundle-ActivationPolicy: lazy

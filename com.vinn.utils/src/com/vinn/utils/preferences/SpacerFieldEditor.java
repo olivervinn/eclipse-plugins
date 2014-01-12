@@ -1,4 +1,4 @@
-package com.vinn.cdt.preferences;
+package com.vinn.utils.preferences;
 
 import org.eclipse.swt.widgets.Composite;
 

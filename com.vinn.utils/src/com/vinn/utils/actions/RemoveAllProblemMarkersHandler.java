@@ -2,7 +2,7 @@
  * Copyright Oliver Vinn 2013
  */
 
-package com.vinn.ui.utils.handlers;
+package com.vinn.utils.actions;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -32,9 +32,6 @@ public class RemoveAllProblemMarkersHandler extends AbstractHandler {
         e.printStackTrace();
       }
     }
-
-
-
     return null;
   }
 }

@@ -1,21 +1,21 @@
-package com.vinn.cdt.preferences;
+package com.vinn.utils.preferences;
 
 import org.eclipse.jface.preference.FieldEditor;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * A field editor for adding separator to a preference page.
+ * A field editor for displaying labels not associated with other widgets.
  */
-public class SeparatorFieldEditor extends FieldEditor {
+public class LabelFieldEditor extends FieldEditor {
+
   private Label label;
 
-  // All separators can use the same preference name since they don't
+  // All labels can use the same preference name since they don't
   // store any preference.
-  public SeparatorFieldEditor(Composite parent) {
-    super("separator", "", parent);
+  public LabelFieldEditor(String value, Composite parent) {
+    super("label", value, parent);
   }
 
   // Adjusts the field editor to be displayed correctly
@@ -26,7 +26,7 @@ public class SeparatorFieldEditor extends FieldEditor {
 
   // Fills the field editor's controls into the given parent.
   protected void doFillIntoGrid(Composite parent, int numColumns) {
-    label = new Label(parent, SWT.HORIZONTAL | SWT.SEPARATOR);
+    label = getLabelControl(parent);
 
     GridData gridData = new GridData();
     gridData.horizontalSpan = numColumns;

@@ -1,10 +1,17 @@
 package com.vinn.cdt.preferences;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
 import org.eclipse.jface.preference.*;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbench;
 
 import com.vinn.cdt.build.Activator;
+import com.vinn.utils.preferences.AddRemoveListFieldEditor;
+import com.vinn.utils.preferences.SpacerFieldEditor;
 
 /**
  * This class represents a preference page that is contributed to the Preferences dialog. By
@@ -19,11 +26,14 @@ import com.vinn.cdt.build.Activator;
 public class VinnBuildPreferencePage extends FieldEditorPreferencePage
     implements
       IWorkbenchPreferencePage {
+  
+  List<StringFieldEditor> stringRegexEditors;
 
   public VinnBuildPreferencePage() {
     super(GRID);
     setPreferenceStore(Activator.getDefault().getPreferenceStore());
     setDescription("Settings related to the enivronment (cross c project)");
+    stringRegexEditors = new ArrayList<StringFieldEditor>();
   }
 
   /**
@@ -44,41 +54,69 @@ public class VinnBuildPreferencePage extends FieldEditorPreferencePage
     addField(new SpacerFieldEditor(getFieldEditorParent()));
 
     // build
-
-    addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_PROJECT_NAME,
-        "Config project name", getFieldEditorParent()));
+    StringFieldEditor sBuild = new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_PROJECT_NAME,
+      "Config project name", getFieldEditorParent());
+    sBuild.setEmptyStringAllowed(false);
+    addField(sBuild);
 
     // out/
-    addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_PROJECT_PATH,
-        "Base path to search", getFieldEditorParent()));
+    StringFieldEditor sSearch = new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_PROJECT_PATH,
+      "Base path to search", getFieldEditorParent());
+    sSearch.setEmptyStringAllowed(false);
+    addField(sSearch);
 
     // 2
-    addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_PROJECT_DEPTH,
-        "Search depth", getFieldEditorParent()));
+    IntegerFieldEditor intField = new IntegerFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_PROJECT_DEPTH,
+      "Search depth", getFieldEditorParent());
+    intField.setEmptyStringAllowed(false);
+    addField(intField);
+    
 
     // \w+/\w+/ (e.g. product/part/ for a folder selector)
     // \w+/\w+/config.txt (e.g. product/part/ for a folder-file selector)
 
-    addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_SELECTOR,
-        "Config file selector", getFieldEditorParent()));
+    stringRegexEditors.add(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_SELECTOR,
+      "Config file selector", getFieldEditorParent()));
 
     // From path where the config was found
     // e.g. product/part/cc_opts.txt
 
-    addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_DEFINE_FILE_SELECTOR,
-        "C Define file selector", getFieldEditorParent()));
+    stringRegexEditors.add(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_DEFINE_FILE_SELECTOR,
+      "C Define file selector", getFieldEditorParent()));
 
-    addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_DEFINE_EXTRACTOR,
-        "C Define extractor", getFieldEditorParent()));
+    stringRegexEditors.add(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_DEFINE_EXTRACTOR,
+      "C Define extractor", getFieldEditorParent()));
 
-    addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_FOLDER_FILE_SELECTOR,
-        "Folder include file selector", getFieldEditorParent()));
+    stringRegexEditors.add(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_FOLDER_FILE_SELECTOR,
+      "Folder include file selector", getFieldEditorParent()));
 
-    addField(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_FOLDER_EXTRACTOR,
-        "Folder include extractor", getFieldEditorParent()));
+    stringRegexEditors.add(new StringFieldEditor(VinnBuildPreferenceConstants.P_STRING_CONF_FOLDER_EXTRACTOR,
+      "Folder include extractor", getFieldEditorParent()));
+
+    for(StringFieldEditor s : stringRegexEditors) {
+      s.setEmptyStringAllowed(false);
+      addField(s);
+    }
 
     addField(new SpacerFieldEditor(getFieldEditorParent()));
 
+  }
+    
+  @Override
+  public boolean performOk() {
+    // Check that regex compile
+    for(StringFieldEditor s : stringRegexEditors) {
+      String value = s.getStringValue();
+      try {
+      Pattern.compile(value);
+      } catch (PatternSyntaxException e) {
+        s.setErrorMessage(String.format("%s - Invalid Regular Expression",s.getLabelText()));
+        s.showErrorMessage();
+        return false;
+      }
+    }
+    
+    return super.performOk();
   }
 
   /*
