@@ -251,7 +251,7 @@
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?after=project">
+            locationURI="menu:org.eclipse.ui.main.menu?before=window">
          <menu
                id="com.vinn.utils.tools.menu"
                label="Tools">
