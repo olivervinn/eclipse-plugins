@@ -16,6 +16,8 @@ A collection of plugins for Eclipse and CDT.
 
 ![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/environment.png)
 
+![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/environment_indicator.png)
+
 
 
 
