@@ -32,7 +32,7 @@ public class VinnBuildPreferencePage extends FieldEditorPreferencePage
   public VinnBuildPreferencePage() {
     super(GRID);
     setPreferenceStore(Activator.getDefault().getPreferenceStore());
-    setDescription("Settings related to the enivronment (cross c project)");
+    setDescription("Settings for the cross c project environment configuration");
     stringRegexEditors = new ArrayList<StringFieldEditor>();
   }
 
@@ -49,7 +49,6 @@ public class VinnBuildPreferencePage extends FieldEditorPreferencePage
     addField(new AddRemoveListFieldEditor(
         VinnBuildPreferenceConstants.P_EXCLUDED_PROJECT_NAME_ENDINGS,
         "List of project name endings to ignore", getFieldEditorParent()));
-
 
     addField(new SpacerFieldEditor(getFieldEditorParent()));
 

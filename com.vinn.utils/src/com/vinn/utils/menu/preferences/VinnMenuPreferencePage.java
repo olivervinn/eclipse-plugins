@@ -16,7 +16,7 @@ public class VinnMenuPreferencePage extends FieldEditorPreferencePage
   public VinnMenuPreferencePage() {
     super(FLAT);
     setPreferenceStore(Activator.getDefault().getPreferenceStore());
-    setDescription("Editor Context Menu Item");
+    setDescription("Select the following options to hide items from the editor context menu");
   }
 
   @Override

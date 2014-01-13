@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="com.vinn.feature.cdt"
-      label="Oliver Vinn Eclipse CDT Tools"
+      label="Eclipse CDT Tools"
       version="1.0.0.qualifier"
       provider-name="Oliver Vinn">
 

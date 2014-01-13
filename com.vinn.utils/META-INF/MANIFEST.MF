@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: UI Cleanup and Font Size Shortcuts
+Bundle-Name: Font Size Shortcuts & Other Util
 Bundle-SymbolicName: com.vinn.utils;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: com.vinn.utils.Activator

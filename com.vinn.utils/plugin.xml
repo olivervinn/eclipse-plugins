@@ -28,29 +28,29 @@
             categoryId="org.eclipse.ui.category.views"
             defaultHandler="com.vinn.utils.font.handlers.FontSizeChangeHandler"
             id="com.vinn.utils.font.command.increase"
-            name="com.vinn.utils.font.command.increase">
+            name="Grow Font">
       </command>
       <command
             categoryId="org.eclipse.ui.category.views"
             defaultHandler="com.vinn.utils.font.handlers.FontSizeChangeHandler"
             id="com.vinn.utils.font.command.decrease"
-            name="com.vinn.utils.font.command.decrease">
+            name="Shrink Font">
       </command>
       <command
             categoryId="org.eclipse.ui.category.views"
             defaultHandler="com.vinn.utils.font.handlers.FontSizeChangeHandler"
             id="com.vinn.utils.font.command.reset"
-            name="com.vinn.utils.font.command.reset">
+            name="Normal Font">
       </command>
       <command
             defaultHandler="com.vinn.utils.actions.RemoveAllProblemMarkersHandler"
             id="com.vinn.utils.commands.removeproblems"
-            name="com.vinn.utils.commands.removeproblems">
+            name="Remove Problem Markers">
       </command>
       <command
             defaultHandler="com.vinn.utils.actions.RefreshProjectsHandler"
             id="com.vinn.utils.commands.refreshall"
-            name="com.vinn.utils.commands.refreshall">
+            name="Refresh Projects">
       </command>
    </extension>
    <extension
@@ -290,7 +290,7 @@
             </command>
             <command
                   commandId="org.eclipse.ui.edit.text.removeTrailingWhitespace"
-                  label="Remove Tailing Whitespace"
+                  label="Remove Trailing Whitespace"
                   style="push">
             </command>
             <command
@@ -336,16 +336,16 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="org.eclipse.ui.preferencePages.ColorsAndFonts"
+            category="org.eclipse.ui.preferencePages.Views"
             class="com.vinn.utils.font.preferences.VinnFontUtilsPreferencePage"
             id="com.vinn.utils.preferences.EnvironmentPreferencePage"
-            name="Font Size Changer">
+            name="Font Size">
       </page>
       <page
             category="org.eclipse.ui.preferencePages.Workbench"
             class="com.vinn.utils.menu.preferences.VinnMenuPreferencePage"
             id="com.vinn.utils.preferences.MenuPreferencePage"
-            name="Menu Visibility">
+            name="Context Menu">
       </page>
    </extension>
 

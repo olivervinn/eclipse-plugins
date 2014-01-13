@@ -13,8 +13,12 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.services.ISourceProviderService;
 
+import com.vinn.cdt.ConfigurationActiveState;
 import com.vinn.cdt.build.ConfigurationManager;
 import com.vinn.cdt.build.ConfigurationManager.ConfigurationEntity;
 import com.vinn.cdt.build.Utils;
@@ -30,6 +34,13 @@ public class ConfigurationSelectionHandler extends AbstractHandler {
     dialog.open();
 
     if (Dialog.OK == dialog.getReturnCode()) {
+      
+   // perform login here ...
+      IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindow(event);
+      ISourceProviderService service = (ISourceProviderService) window.getService(ISourceProviderService.class);
+      final ConfigurationActiveState sessionSourceProvider = (ConfigurationActiveState) service.getSourceProvider(ConfigurationActiveState.STATE);
+      sessionSourceProvider.activate();
+      
       IRunnableWithProgress operation = new IRunnableWithProgress() {
         public void run(IProgressMonitor monitor) {
           Object[] profiles = dialog.getResult();

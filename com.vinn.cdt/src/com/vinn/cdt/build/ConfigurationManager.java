@@ -31,8 +31,12 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.preferences.ConfigurationScope;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.osgi.service.prefs.BackingStoreException;
 
 import com.vinn.cdt.preferences.VinnBuildPreferenceConstants;
 
@@ -46,6 +50,8 @@ public class ConfigurationManager {
   private IPreferenceStore prf;
   private List<ConfigurationEntity> fConfigurationEntities;
   private ConfigurationEntity fActiveConfigurationEntity;
+
+  private Boolean fCachedState;
 
   public class ConfigurationEntity {
     private IResource fRoot;
@@ -90,6 +96,8 @@ public class ConfigurationManager {
     fActiveConfigurationEntity = null;
     setEnvironmentWithText(null, null);
     removeResourceFiltersFromAllProjects();
+    
+    setIsActive(false);
     StatusManager.getManager().handle(
         new Status(IStatus.INFO, Activator.PLUGIN_ID, "Removed configuration"));
 
@@ -148,6 +156,8 @@ public class ConfigurationManager {
       // Carry on as will just filter the configurations
       setEnvironmentResourceFilterWithFile((IFile) foundResource, folderFilterExtractor);
     }
+    
+    setIsActive(true);
 
     return null;
   }
@@ -425,6 +435,25 @@ public class ConfigurationManager {
         break;
       }
     }
+  }
+
+  public void setIsActive(boolean state) {
+    IEclipsePreferences p = ConfigurationScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+    p.putBoolean("configurationActive", state);
+    try {
+      p.flush();
+    } catch (BackingStoreException e) {
+      e.printStackTrace();
+    }
+    fCachedState = state;
+  }
+  
+  public boolean getIsActive() {
+    if (fCachedState == null) {
+      IEclipsePreferences p = ConfigurationScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+      fCachedState = p.getBoolean("configurationActive", false);
+    }
+    return fCachedState.booleanValue();
   }
 
 }
