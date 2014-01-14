@@ -1,4 +1,4 @@
-package com.vinn.cdt.build;
+package com.vinn.cdt;
 
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;

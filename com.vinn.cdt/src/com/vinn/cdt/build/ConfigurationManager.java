@@ -31,13 +31,14 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.service.prefs.BackingStoreException;
 
+import com.vinn.cdt.Activator;
+import com.vinn.cdt.Utils;
 import com.vinn.cdt.preferences.VinnBuildPreferenceConstants;
 
 public class ConfigurationManager {
@@ -45,7 +46,7 @@ public class ConfigurationManager {
   private static volatile ConfigurationManager instance = null;
 
   public static final String CONFIGURATION_ID = "com.vinn.build.dynamiccconfig";
-  public static final String CONFIGURATION_NAME = "[Vinn Dynamic Configuration]";
+  public static final String CONFIGURATION_NAME = "[Dynamic Configuration]";
 
   private IPreferenceStore prf;
   private List<ConfigurationEntity> fConfigurationEntities;
@@ -438,7 +439,7 @@ public class ConfigurationManager {
   }
 
   public void setIsActive(boolean state) {
-    IEclipsePreferences p = ConfigurationScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+    IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
     p.putBoolean("configurationActive", state);
     try {
       p.flush();
@@ -450,7 +451,7 @@ public class ConfigurationManager {
   
   public boolean getIsActive() {
     if (fCachedState == null) {
-      IEclipsePreferences p = ConfigurationScope.INSTANCE.getNode(Activator.PLUGIN_ID);
+      IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
       fCachedState = p.getBoolean("configurationActive", false);
     }
     return fCachedState.booleanValue();

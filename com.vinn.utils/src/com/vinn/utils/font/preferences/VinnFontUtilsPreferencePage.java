@@ -7,7 +7,6 @@ import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import com.vinn.utils.Activator;
 import com.vinn.utils.preferences.LinkFieldEditor;
-import com.vinn.utils.preferences.SeparatorFieldEditor;
 import com.vinn.utils.preferences.SpacerFieldEditor;
 
 public class VinnFontUtilsPreferencePage extends FieldEditorPreferencePage

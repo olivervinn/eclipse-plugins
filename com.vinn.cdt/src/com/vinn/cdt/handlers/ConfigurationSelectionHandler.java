@@ -19,9 +19,9 @@ import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.services.ISourceProviderService;
 
 import com.vinn.cdt.ConfigurationActiveState;
+import com.vinn.cdt.Utils;
 import com.vinn.cdt.build.ConfigurationManager;
 import com.vinn.cdt.build.ConfigurationManager.ConfigurationEntity;
-import com.vinn.cdt.build.Utils;
 import com.vinn.cdt.ui.ConfigurationSelectionDialog;
 
 public class ConfigurationSelectionHandler extends AbstractHandler {

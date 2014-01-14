@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: CDT Tools & Configuration Support
+Bundle-Name: Vinn CDT Tools & Configuration Support
 Bundle-SymbolicName: com.vinn.cdt;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: com.vinn.cdt.build.Activator
+Bundle-Activator: com.vinn.cdt.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.core.resources,

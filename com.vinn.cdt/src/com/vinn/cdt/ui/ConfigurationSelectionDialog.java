@@ -19,7 +19,7 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog;
 
-import com.vinn.cdt.build.Activator;
+import com.vinn.cdt.Activator;
 import com.vinn.cdt.build.ConfigurationManager;
 import com.vinn.cdt.build.ConfigurationManager.ConfigurationEntity;
 

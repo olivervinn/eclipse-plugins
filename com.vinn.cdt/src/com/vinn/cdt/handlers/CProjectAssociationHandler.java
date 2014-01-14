@@ -20,8 +20,8 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import com.vinn.cdt.build.Activator;
-import com.vinn.cdt.build.Utils;
+import com.vinn.cdt.Activator;
+import com.vinn.cdt.Utils;
 import com.vinn.cdt.preferences.VinnBuildPreferenceConstants;
 
 public class CProjectAssociationHandler extends AbstractHandler {

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/com.vinn.feature.cdt_1.0.0.201401132340.jar" id="com.vinn.feature.cdt" version="1.0.0.201401132340">
+   <feature url="features/com.vinn.feature.cdt_1.0.0.201401142048.jar" id="com.vinn.feature.cdt" version="1.0.0.201401142048">
       <category name="com.vinn.cat1"/>
    </feature>
-   <feature url="features/com.vinn.feature.utils_1.0.0.201401132340.jar" id="com.vinn.feature.utils" version="1.0.0.201401132340">
+   <feature url="features/com.vinn.feature.utils_1.0.0.201401142048.jar" id="com.vinn.feature.utils" version="1.0.0.201401142048">
       <category name="com.vinn.cat1"/>
    </feature>
-   <category-def name="com.vinn.cat1" label="Eclipse Additions"/>
+   <category-def name="com.vinn.cat1" label="Vinn Eclipse Additions"/>
 </site>

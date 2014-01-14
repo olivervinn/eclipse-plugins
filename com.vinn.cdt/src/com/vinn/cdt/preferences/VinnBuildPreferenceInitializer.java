@@ -3,7 +3,7 @@ package com.vinn.cdt.preferences;
 import org.eclipse.core.runtime.preferences.AbstractPreferenceInitializer;
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import com.vinn.cdt.build.Activator;
+import com.vinn.cdt.Activator;
 
 /**
  * Class used to initialize default preference values.

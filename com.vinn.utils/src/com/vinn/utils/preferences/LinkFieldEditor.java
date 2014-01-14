@@ -1,13 +1,9 @@
 package com.vinn.utils.preferences;
 
 import org.eclipse.jface.preference.FieldEditor;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Link;
-import org.eclipse.ui.dialogs.PreferencesUtil;
 
 /**
  * A field editor for displaying labels not associated with other widgets.

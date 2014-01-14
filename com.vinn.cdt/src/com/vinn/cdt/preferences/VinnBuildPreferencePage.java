@@ -9,7 +9,7 @@ import org.eclipse.jface.preference.*;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbench;
 
-import com.vinn.cdt.build.Activator;
+import com.vinn.cdt.Activator;
 import com.vinn.utils.preferences.AddRemoveListFieldEditor;
 import com.vinn.utils.preferences.SpacerFieldEditor;
 

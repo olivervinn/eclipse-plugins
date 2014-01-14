@@ -1,4 +1,4 @@
-package com.vinn.cdt.build;
+package com.vinn.cdt;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
