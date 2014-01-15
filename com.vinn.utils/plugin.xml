@@ -55,38 +55,6 @@
    </extension>
    <extension
          point="org.eclipse.ui.activities">
-         <activity
-            id="com.vinn.util.menu.other.ctivity"
-            name="Other Action Menu">
-         <enabledWhen>
-          <and>
-                      <with
-                            variable="activePart">
-                            <not>
-                               <instanceof
-                                     value="org.eclipse.ui.editors.text.TextEditor">
-                               </instanceof>
-                            </not>
-                      </with>
-                      <with
-                            variable="com.vinn.utils.menu.other.active">
-                         <equals
-                               value="SHOW">
-                         </equals>
-                      </with>
-                  </and>
-         </enabledWhen>
-      </activity>
-         <activityPatternBinding
-               activityId="com.vinn.util.menu.other.ctivity"
-               isEqualityPattern="false"
-               pattern=".*com.tetrade.eclipse.plugins.easyshell.command.*">
-         </activityPatternBinding>
-      <activityPatternBinding
-            activityId="com.vinn.util.menu.other.ctivity"
-            isEqualityPattern="false"
-            pattern="org.python.pydev.ui.actions.*">
-      </activityPatternBinding>
       <activity
             id="com.vinn.util.menu.basic.activity"
             name="Basic Action Menu">
@@ -141,11 +109,6 @@
             isEqualityPattern="true"
             pattern="org.eclipse.ui.file.undo">
       </activityPatternBinding>
-      <activityPatternBinding
-            activityId="com.vinn.util.menu.basic.activity"
-            isEqualityPattern="false"
-            pattern=".*org.eclipse.debug.internal.ui.actions.RunDropDownAction.*">
-      </activityPatternBinding>
       <activity
             id="com.vinn.util.menu.cdtbuild.activity"
             name="CDT Build Action Menu">
@@ -160,6 +123,11 @@
             </and>
          </enabledWhen>
       </activity>
+      <activityPatternBinding
+            activityId="com.vinn.util.menu.cdtbuild.activity"
+            isEqualityPattern="false"
+            pattern=".*org.eclipse.debug.internal.ui.actions.RunDropDownAction.*">
+      </activityPatternBinding>
       <activityPatternBinding
             activityId="com.vinn.util.menu.cdtbuild.activity"
             isEqualityPattern="true"
@@ -209,21 +177,44 @@
             activityId="com.vinn.util.menu.cdtbuild.activity"
             isEqualityPattern="false"
             pattern=".*org.eclipse.debug.ui.contextualLaunch.run.submenu.*">
-      </activityPatternBinding>
-      <activity
-            id="com.vinn.util.menu.project.activity"
-            name="NonProject Menu">
-         <enabledWhen>
-            <with
-                  variable="selection">
-               <iterate>
-                  <instanceof
-                        value="org.eclipse.core.resources.IProjectNature">
-                  </instanceof>
-               </iterate>
-            </with>
-         </enabledWhen>
-      </activity>
+            </activityPatternBinding>
+                <activity
+                      id="com.vinn.util.menu.other.activity"
+                      name="Other Action Menu">
+                   <enabledWhen>
+                         <or>
+                            <with
+                                  variable="com.vinn.utils.menu.other.active">
+                               <equals
+                                     value="SHOW">
+                               </equals>
+                            </with>
+                            <with
+                                  variable="activePartId">
+                               <equals
+                                     value="org.eclipse.ui.navigator.ProjectExplorer">
+                               </equals>
+                            </with>
+                            <with
+                                  variable="activePartId">
+                               <equals
+                                     value="org.eclipse.cdt.ui.CView">
+                               </equals>
+                            </with>
+                         </or>
+                   </enabledWhen>
+                </activity>
+                <activityPatternBinding
+                      activityId="com.vinn.util.menu.other.activity"
+                      isEqualityPattern="false"
+                      pattern="org.python.pydev.ui.actions.*">
+                </activityPatternBinding>
+                <activityPatternBinding
+                      activityId="com.vinn.util.menu.other.activity"
+                      isEqualityPattern="false"
+                      pattern=".*com.tetrade.eclipse.plugins.easyshell.command.*">
+                </activityPatternBinding>
+      
       <!-- <activityPatternBinding
             activityId="com.vinn.ui.util.cleanup.activity.project"
             isEqualityPattern="false"

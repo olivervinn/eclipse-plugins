@@ -7,11 +7,13 @@ Bundle-Activator: com.vinn.utils.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.core.expressions,
- org.eclipse.ui.workbench.texteditor
+ org.eclipse.ui.workbench.texteditor,
+ org.eclipse.cdt.core
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: com.vinn.utils;uses:="org.eclipse.ui.plugin,org.osgi.framework",
  com.vinn.utils.preferences;uses:="org.eclipse.jface.preference,org.eclipse.swt.widgets"
 Bundle-Vendor: Oliver Vinn
 Import-Package: org.eclipse.core.resources,
+ org.eclipse.text.edits,
  org.eclipse.ui.editors.text

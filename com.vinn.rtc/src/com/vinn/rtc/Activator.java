@@ -1,4 +1,4 @@
-package com.vinn.jazz.utils;
+package com.vinn.rtc;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

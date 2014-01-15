@@ -1,4 +1,4 @@
-package com.vinn.jazz.utils;
+package com.vinn.rtc.startup;
 
 
 import org.eclipse.core.runtime.IProgressMonitor;

@@ -16,18 +16,18 @@ public class VinnMenuPreferencePage extends FieldEditorPreferencePage
   public VinnMenuPreferencePage() {
     super(FLAT);
     setPreferenceStore(Activator.getDefault().getPreferenceStore());
-    setDescription("Select the following options to hide items from the editor context menu");
+    setDescription("Select the following options to hide items from the context menu");
   }
 
   @Override
   protected void createFieldEditors() {
     addField(new SpacerFieldEditor(getFieldEditorParent()));
     addField(new BooleanFieldEditor(VinnMenuPreferenceConstants.P_STRING_HIDE_BASICS,
-        "&Hide Basic Actions (cut, copy, paste..)", getFieldEditorParent()));
+        "Hide basic actions (cut, copy, paste..)", getFieldEditorParent()));
     addField(new BooleanFieldEditor(VinnMenuPreferenceConstants.P_STRING_HIDE_CDT_BUILD,
-        "&Hide CDT Build Actions (build selected...)", getFieldEditorParent()));
+        "Hide CDT build actions (build selected...)", getFieldEditorParent()));
     addField(new BooleanFieldEditor(VinnMenuPreferenceConstants.P_STRING_HIDE_OTHERS,
-      "&Hide Others (Easy shell, Pydev...)", getFieldEditorParent()));
+      "Hide other items from editor menu (Easy shell, Pydev...)", getFieldEditorParent()));
     addField(new SpacerFieldEditor(getFieldEditorParent()));
     addField(new LabelFieldEditor("* Changes require restart to take affect", getFieldEditorParent()));
   }
