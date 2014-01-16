@@ -21,6 +21,26 @@
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+0">
       </key>
+      <key
+            commandId="com.vinn.utils.ui.views.hopper"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+F5">
+         <parameter
+               id="com.vinn.utils.ui.views.hopper.mode"
+               value="restore">
+         </parameter>
+      </key>
+      <key
+            commandId="com.vinn.utils.ui.views.hopper"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+M2+F5">
+         <parameter
+               id="com.vinn.utils.ui.views.hopper.mode"
+               value="set">
+         </parameter>
+      </key>
    </extension>
    <extension
          point="org.eclipse.ui.commands">
@@ -338,6 +358,78 @@
             id="com.vinn.utils.preferences.MenuPreferencePage"
             name="Context Menu">
       </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="com.vinn.ui.view.handlers.ViewHopperHandler"
+            description="View Hopper"
+            id="com.vinn.utils.ui.views.hopper"
+            name="View Hopper">
+         <commandParameter
+               id="com.vinn.utils.ui.views.hopper.mode"
+               name="name"
+               optional="true"
+               values="set, undo, restore">
+         </commandParameter>
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="com.vinn.utils.ui.views.toolbar">
+            <command
+                  commandId="com.vinn.utils.ui.views.hopper"
+                  icon="icons/view_restore.gif"
+                  id="com.vinn.utils.ui.views.hopper.menu"
+                  label="Restore Views"
+                  style="pulldown"
+                  tooltip="Restore previously stored views">
+               <parameter
+                     name="com.vinn.utils.ui.views.hopper.mode"
+                     value="restore">
+               </parameter>
+            </command>
+         </toolbar>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:com.vinn.utils.ui.views.hopper.menu">
+         <command
+               commandId="com.vinn.utils.ui.views.hopper"
+               label="Store Views"
+               style="push"
+               tooltip="Save the views currently open for restore later">
+            <parameter
+                  name="com.vinn.utils.ui.views.hopper.mode"
+                  value="set">
+            </parameter>
+         </command>
+         <command
+               commandId="com.vinn.utils.ui.views.hopper"
+               icon="icons/view_restore.gif"
+               label="Restore Views"
+               style="pulldown"
+               tooltip="Restore previously stored views">
+            <parameter
+                  name="com.vinn.utils.ui.views.hopper.mode"
+                  value="restore">
+            </parameter>
+         </command>
+         <command
+               commandId="com.vinn.utils.ui.views.hopper"
+               label="Undo Restore Views"
+               style="push"
+               tooltip="Undo the last restore and bring back the views">
+            <parameter
+                  name="com.vinn.utils.ui.views.hopper.mode"
+                  value="undo">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
 
 </plugin>
