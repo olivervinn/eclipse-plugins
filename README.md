@@ -1,7 +1,7 @@
 Overview
 ===============
 
-A collection of plugins to make working with Eclipse and the CDT me friendly.
+A collection of plugins to make working with Eclipse and the CDT friendly. Implemented by me in my time for me. Maybe useful to you.
 
 
 Utils
