@@ -61,8 +61,6 @@ The CDT plugin surfaces some control over the indexer and across projects.
 
 ![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/environment.png)
 
-![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/environment_indicator.png)
-
 
 **Associate (cross reference) C projects**
 
@@ -77,7 +75,7 @@ If you have an output that captures the C defines and a way to identify the
 different configurations (be it 1) you may be able to use this to set the c
 defines in all projects.
 
-See the preferences dialog for configuration (C/C++ > Environment).
+See the *Preferences > C/C++ > Environment*
 
 Tested with a folder hierarchy indicating a configuration, under which files
 can be found to parse out the C defines.
@@ -89,6 +87,8 @@ Further if you have a file that lists additional folders not used by the configu
 it can be parsed and those will be removed also.
 
 Finally the C indexer is rebuilt on all projects.
+
+![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/environment_indicator.png)
 
 
 **Rebuild all project indexes**
