@@ -18,11 +18,12 @@ Store your current open views <kbd>CTRL+SHIFT+F5</kbd> and restore them via the 
 
 Yet another font size changer. Using <kbd>CTRL+SHIFT+=</kbd> to increase and <kbd>CTRL+SHIFT+-</kbd> to decrease font size. While <kbd>CTRL+0</kbd> is available to reset to a default font size quickly. The none standard key combination is chosen so not to conflict with the default keys used by CDT for source navigation.
 
+![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.utils/images/tools.png)
 
 *Preferences > General > Appearance > Font Size*
 
+![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.utils/images/font_size.png)
 
-![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.utils/images/tools.png)
 
 
 **Remove all problem markers**
@@ -34,6 +35,8 @@ With one click remove all problem markers from all workspace projects.
 The Editor context menu is seriously over populated so using activities take back control. Three tier hiding: basic copy-paste... then the build commands that a non managed project dont use. Finally to tame plugins like Easy shell and PyDev. Each group can be disabled via the preferneces page.
 
 *Preferences > General > Context Menu*
+
+![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.utils/images/context_menu.png)
 
 
 **Refresh all project resources**
@@ -68,25 +71,24 @@ With <kbd>CTRL+ALT+L</kbd> or the menu item under environment you can associate 
 
 This association is done with dynamic references so stored in the workspace. So you wont see anything in the references property page. This stops CM systems picking up changes to the .cproject files that standard references will modify.
 
+It is possible to exclude projects by name endings via the preferences page
+
+*Preferences > C/C++ > Environment*
+
+![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/preferences.png)
+
 
 **Cross project configuration selector**
 
-If you have an output that captures the C defines and a way to identify the 
-different configurations (be it 1) you may be able to use this to set the c
-defines in all projects.
+If you have an output that captures the C defines and a way to identify the different configurations (be it 1) you may be able to use this to set the c defines in all projects.
 
-See the *Preferences > C/C++ > Environment*
+Using the preferences page to define epressions to identify a configuration and select files with C define and folder information it is possible to set the project definitions and get an accurate index.
 
-Tested with a folder hierarchy indicating a configuration, under which files
-can be found to parse out the C defines.
+Select the configuration from the dialog selection. The files will be parsed and the definitions set. Hides other configurations using resource filters and then kicks off the indexer. 
 
-On selecting the configuration in addition to setting the defines the plugin
-will use resource filters to remove the other unused configuration resources from view.
+If you have a file that lists additional folders not used by the configuration it shall also be parsed and those will be hidden too prior to rebuilding the index.
 
-Further if you have a file that lists additional folders not used by the configuration
-it can be parsed and those will be removed also.
-
-Finally the C indexer is rebuilt on all projects.
+When active the project view will highlight with the green indicator seen below. Click the icon to remove all resource filters and definitions.
 
 ![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/environment_indicator.png)
 
