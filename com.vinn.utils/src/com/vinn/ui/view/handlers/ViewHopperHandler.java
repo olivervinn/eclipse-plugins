@@ -7,97 +7,90 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 import com.vinn.utils.Activator;
 
-
 public class ViewHopperHandler extends AbstractHandler {
 
-  String[] fPreviousViewIds;
+  final String BACKUP_LIST_ID = "backupviewlist";
+  final String SHOW_LIST_ID = "setviewlist";
+  final String LIST_DELIMITER = ";";
+  final String HANDLE_PARAM_ID = "com.vinn.utils.ui.views.hopper.mode";
 
   @Override
   public Object execute(ExecutionEvent event) throws ExecutionException {
 
     IWorkbenchPage page = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage();
-    String mode = event.getParameter("com.vinn.utils.ui.views.hopper.mode");
+    String mode = event.getParameter(HANDLE_PARAM_ID);
 
     if (mode.equalsIgnoreCase("set")) {
-      rememberViews(page, "setviewlist");
+      String delimList = getOpenViews(page);
+      saveViews(page, delimList,SHOW_LIST_ID);
     } else if (mode.equalsIgnoreCase("restore")) {
-      
-      String l = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).get("setviewlist", null);
+      String l = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).get(SHOW_LIST_ID, null);
       if (l != null) {
-        String[] fRestoreViewIds = l.split(";");
+        String[] fRestoreViewIds = l.split(LIST_DELIMITER);
         restoreViews(page, fRestoreViewIds);
       }
-      
     } else {
-      
-      String l = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).get("backupviewlist", null);
+      String l = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).get(BACKUP_LIST_ID, null);
       if (l != null) {
-        String[] fRestoreViewIds = l.split(";");
+        String[] fRestoreViewIds = l.split(LIST_DELIMITER);
         restoreViews(page, fRestoreViewIds);
       }
-      
     }
     return null;
   }
 
-  private void restoreViews(IWorkbenchPage page, String[] viewIds) {
-    
-    rememberViews(page, "backupviewlist");
-
+  private void restoreViews(IWorkbenchPage page, String[] viewIdsToShow) {
     IViewReference[] visibleViewRefs = page.getViewReferences();
-    boolean found = false;
+    boolean changeOccurred = false;
+    String openPriorToChange = getOpenViews(page);
 
-    // Visible
-    for (int i = 0; i < visibleViewRefs.length; i++) {
-      found = false;
-      String id = visibleViewRefs[i].getId();
-      
-      // Should be?
-      for (int j = 0; j < viewIds.length; j++) {
-        if (id.equals(viewIds[j])) {
+    for (int visibleViewRefIndex = 0; visibleViewRefIndex < visibleViewRefs.length; visibleViewRefIndex++) {
+      boolean found = false;
+      for (int viewIdIndex = 0; viewIdIndex < viewIdsToShow.length; viewIdIndex++) {
+        String visibleId = visibleViewRefs[visibleViewRefIndex].getId();
+        if (visibleId.equals(viewIdsToShow[viewIdIndex])) {
+          viewIdsToShow[viewIdIndex] = null;
           found = true;
           break;
         }
       }
-      
-      if (found) {
-        // Already visible then remove those to show
-        viewIds[i] = null;
-      } else {
-        // Should be hidden
-        page.hideView(visibleViewRefs[i]);
+      if (!found) {
+        page.hideView(visibleViewRefs[visibleViewRefIndex]);
+        changeOccurred = true;
       }
     }
 
-
-    // For those remaining make them visible now
-    for (String viewId : viewIds) {
+    // For those remaining make them visible
+    for (String viewId : viewIdsToShow) {
       if (viewId != null && !viewId.equalsIgnoreCase("")) {
         try {
           page.showView(viewId);
+          changeOccurred = true;
         } catch (PartInitException e) {
           e.printStackTrace();
         }
       }
     }
+
+    if (changeOccurred)  {
+      saveViews(page, openPriorToChange, BACKUP_LIST_ID);
+    }
   }
 
-  private void rememberViews(IWorkbenchPage page, String instanceId) {
-    
-    String view_formatter_list = "";
-    
-    IViewReference[] a =
-        PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getViewReferences();
-    for (IViewReference b : a) {
-      view_formatter_list += b.getId() + ";";
-    }
-    
-    InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).put(instanceId, view_formatter_list);
+  private void saveViews(IWorkbenchPage page, String delimList, String instanceId) {
+    InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID).put(instanceId, delimList);
+  }
 
+  private String getOpenViews(IWorkbenchPage page) {
+    IViewReference[] a = page.getViewReferences();
+    String view_formatter_list = "";
+    for (IViewReference b : a) {
+      view_formatter_list += b.getId() + LIST_DELIMITER;
+    }
+    return view_formatter_list;
   }
 }
