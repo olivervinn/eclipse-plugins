@@ -1,3 +1,7 @@
+/*
+ * Copyright Oliver Vinn 2013
+ */
+
 package com.vinn.cdt.build;
 
 import java.util.ArrayList;
@@ -31,28 +35,24 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.preferences.IEclipsePreferences;
-import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.statushandlers.StatusManager;
-import org.osgi.service.prefs.BackingStoreException;
 
 import com.vinn.cdt.Activator;
 import com.vinn.cdt.Utils;
-import com.vinn.cdt.preferences.VinnBuildPreferenceConstants;
+import com.vinn.cdt.preferences.BuildConfPreferenceConstants;
 
 public class ConfigurationManager {
 
   private static volatile ConfigurationManager instance = null;
 
-  public static final String CONFIGURATION_ID = "com.vinn.build.dynamiccconfig";
-  public static final String CONFIGURATION_NAME = "[Dynamic Configuration]";
+  public static final String CONFIGURATION_ID = "com.vinn.cdt.build.dynamic"; //$NON-NLS-1$
+  public static final String CONFIGURATION_NAME = "Dynamic Configuration"; //$NON-NLS-1$
 
   private IPreferenceStore prf;
   private List<ConfigurationEntity> fConfigurationEntities;
   private ConfigurationEntity fActiveConfigurationEntity;
 
-  private Boolean fCachedState;
 
   public class ConfigurationEntity {
     private IResource fRoot;
@@ -97,11 +97,8 @@ public class ConfigurationManager {
     fActiveConfigurationEntity = null;
     setEnvironmentWithText(null, null);
     removeResourceFiltersFromAllProjects();
-    
-    setIsActive(false);
     StatusManager.getManager().handle(
         new Status(IStatus.INFO, Activator.PLUGIN_ID, "Removed configuration"));
-
   }
 
   public Object apply(ConfigurationEntity entity) {
@@ -132,7 +129,7 @@ public class ConfigurationManager {
       }
 
       final String cDefineExtractor =
-          prf.getString(VinnBuildPreferenceConstants.P_STRING_CONF_DEFINE_EXTRACTOR).trim();
+          prf.getString(BuildConfPreferenceConstants.P_STRING_CONF_DEFINE_EXTRACTOR).trim();
 
       IResource foundResource = fActiveConfigurationEntity.getDefinesFile();
       if (foundResource != null) {
@@ -146,7 +143,7 @@ public class ConfigurationManager {
       }
 
       final String folderFilterExtractor =
-          prf.getString(VinnBuildPreferenceConstants.P_STRING_CONF_FOLDER_EXTRACTOR).trim();
+          prf.getString(BuildConfPreferenceConstants.P_STRING_CONF_FOLDER_EXTRACTOR).trim();
 
       foundResource = fActiveConfigurationEntity.getFilterFile();
       if (foundResource == null) {
@@ -157,20 +154,17 @@ public class ConfigurationManager {
       // Carry on as will just filter the configurations
       setEnvironmentResourceFilterWithFile((IFile) foundResource, folderFilterExtractor);
     }
-    
-    setIsActive(true);
-
     return null;
   }
 
   public IResource findDefineFile(IResource searchRoot) {
     return findResourceFile(searchRoot,
-        VinnBuildPreferenceConstants.P_STRING_CONF_DEFINE_FILE_SELECTOR);
+        BuildConfPreferenceConstants.P_STRING_CONF_DEFINE_FILE_SELECTOR);
   }
 
   public IResource findFilterFile(IResource searchRoot) {
     return findResourceFile(searchRoot,
-        VinnBuildPreferenceConstants.P_STRING_CONF_FOLDER_FILE_SELECTOR);
+        BuildConfPreferenceConstants.P_STRING_CONF_FOLDER_FILE_SELECTOR);
   }
 
   private IResource findResourceFile(IResource searchRoot, String patternId) {
@@ -282,8 +276,18 @@ public class ConfigurationManager {
     return fActiveConfigurationEntity;
   }
 
+
+  public ConfigurationEntity createEntity(String root) {
+    IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+    root = root.replaceFirst("^F/", "");
+    IResource r = workspaceRoot.findMember(root);
+    if (r != null)
+      return new ConfigurationEntity(r, findDefineFile(r), findFilterFile(r));
+    return null;
+  }
+
   public List<ConfigurationEntity> getConfigurationResources() {
-    
+
     fConfigurationEntities = new ArrayList<ConfigurationEntity>();
 
     // Find Environment *.confs the parameter is the IResource
@@ -296,31 +300,28 @@ public class ConfigurationManager {
 
     IPreferenceStore p = Activator.getDefault().getPreferenceStore();
     final String projectName =
-        p.getString(VinnBuildPreferenceConstants.P_STRING_CONF_PROJECT_NAME).trim();
+        p.getString(BuildConfPreferenceConstants.P_STRING_CONF_PROJECT_NAME).trim();
     final String projectPath =
-        p.getString(VinnBuildPreferenceConstants.P_STRING_CONF_PROJECT_PATH).trim();
+        p.getString(BuildConfPreferenceConstants.P_STRING_CONF_PROJECT_PATH).trim();
 
     IProject confHomeProject = workspaceRoot.getProject(projectName);
-    
-    if (!confHomeProject.isAccessible() || 
+
+    if (!confHomeProject.isAccessible() ||
         confHomeProject.getLocation() == null) {
       return fConfigurationEntities;
     }
-    
+
     IPath path = confHomeProject.getLocation().append(projectPath);
     if (!workspaceRoot.getContainerForLocation(path).exists()) {
       return fConfigurationEntities;
     }
-    
-    
 
     // Configuration identification
 
     final String confSelector =
-        p.getString(VinnBuildPreferenceConstants.P_STRING_CONF_SELECTOR).trim();
+        p.getString(BuildConfPreferenceConstants.P_STRING_CONF_SELECTOR).trim();
     final Pattern confSelectorPattern =
         java.util.regex.Pattern.compile(confSelector, Pattern.CASE_INSENSITIVE);
-
 
     IResourceFilterDescription[] tempFilters = null;
 
@@ -334,7 +335,7 @@ public class ConfigurationManager {
     List<IResource> foundConfigRoots = new ArrayList<IResource>();
     Utils.FindResourceInTree(foundConfigRoots, path, workspaceRoot, confSelectorPattern, 3);
 
-    
+
     for (IResource r : foundConfigRoots) {
       fConfigurationEntities.add(new ConfigurationEntity(r, findDefineFile(r), findFilterFile(r)));
     }
@@ -437,24 +438,4 @@ public class ConfigurationManager {
       }
     }
   }
-
-  public void setIsActive(boolean state) {
-    IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
-    p.putBoolean("configurationActive", state);
-    try {
-      p.flush();
-    } catch (BackingStoreException e) {
-      e.printStackTrace();
-    }
-    fCachedState = state;
-  }
-  
-  public boolean getIsActive() {
-    if (fCachedState == null) {
-      IEclipsePreferences p = InstanceScope.INSTANCE.getNode(Activator.PLUGIN_ID);
-      fCachedState = p.getBoolean("configurationActive", false);
-    }
-    return fCachedState.booleanValue();
-  }
-
 }

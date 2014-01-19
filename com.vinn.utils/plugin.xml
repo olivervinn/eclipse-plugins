@@ -2,76 +2,266 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
+         point="org.eclipse.ui.services">
+      <sourceProvider
+            provider="com.vinn.utils.providers.MenuViewActivityState">
+         <variable
+               name="com.vinn.utils.menu.basic.active"
+               priorityLevel="workbench">
+         </variable>
+         <variable
+               name="com.vinn.utils.menu.cdtbuild.active"
+               priorityLevel="workbench">
+         </variable>
+         <variable
+               name="com.vinn.utils.menu.other.active"
+               priorityLevel="workbench">
+         </variable>
+      </sourceProvider>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.vinn.utils.preferences.VinnFontUtilsPreferenceInitializer">
+      </initializer>
+      <initializer
+            class="com.vinn.utils.preferences.VinnMenuPreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.eclipse.ui.preferencePages.Views"
+            class="com.vinn.utils.preferences.VinnFontUtilsPreferencePage"
+            id="com.vinn.utils.preferences.EnvironmentPreferencePage"
+            name="Font Size">
+      </page>
+      <page
+            category="org.eclipse.ui.preferencePages.Workbench"
+            class="com.vinn.utils.preferences.VinnMenuPreferencePage"
+            id="com.vinn.utils.preferences.MenuPreferencePage"
+            name="Context Menu">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <commandParameterType
+            id="com.vinn.utils.view.hopper.mode"
+            type="com.vinn.utils.providers.MenuViewActivityState">
+      </commandParameterType>
+      <command
+            categoryId="org.eclipse.ui.category.views"
+            defaultHandler="com.vinn.utils.handlers.view.FontSizeChangeHandler"
+            id="com.vinn.utils.font.increase"
+            name="Grow Font">
+      </command>
+      <command
+            categoryId="org.eclipse.ui.category.views"
+            defaultHandler="com.vinn.utils.handlers.view.FontSizeChangeHandler"
+            id="com.vinn.utils.font.decrease"
+            name="Shrink Font">
+      </command>
+      <command
+            categoryId="org.eclipse.ui.category.views"
+            defaultHandler="com.vinn.utils.handlers.view.FontSizeChangeHandler"
+            id="com.vinn.utils.font.reset"
+            name="Normal Font">
+      </command>
+      <command
+            defaultHandler="com.vinn.utils.handlers.workspace.RemoveAllProblemMarkersHandler"
+            id="com.vinn.utils.remove.problems"
+            name="Remove Problem Markers">
+      </command>
+      <command
+            defaultHandler="com.vinn.utils.handlers.workspace.RefreshProjectsHandler"
+            id="com.vinn.utils.refresh.projects"
+            name="Refresh Projects">
+      </command>
+      <command
+            defaultHandler="com.vinn.utils.handlers.view.ViewHopperHandler"
+            description="View Hopper"
+            id="com.vinn.utils.view.hopper"
+            name="View Hopper">
+         <commandParameter
+               id="com.vinn.utils.view.hopper.mode"
+               name="name"
+               optional="true">
+         </commandParameter>
+      </command>
+      <commandParameterType
+            id="com.vinn.utils.view.hopper.mode">
+      </commandParameterType>
+   </extension>
+   <extension
          point="org.eclipse.ui.bindings">
       <key
-            commandId="com.vinn.utils.font.command.increase"
+            commandId="com.vinn.utils.font.increase"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+M2+=">
       </key>
       <key
-            commandId="com.vinn.utils.font.command.decrease"
+            commandId="com.vinn.utils.font.decrease"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+M2+-">
       </key>
       <key
-            commandId="com.vinn.utils.font.command.reset"
+            commandId="com.vinn.utils.font.reset"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+0">
       </key>
       <key
-            commandId="com.vinn.utils.ui.views.hopper"
+            commandId="com.vinn.utils.view.hopper"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+F5">
          <parameter
-               id="com.vinn.utils.ui.views.hopper.mode"
+               id="com.vinn.utils.view.hopper.mode"
                value="restore">
          </parameter>
       </key>
       <key
-            commandId="com.vinn.utils.ui.views.hopper"
+            commandId="com.vinn.utils.view.hopper"
             contextId="org.eclipse.ui.contexts.window"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+M2+F5">
          <parameter
-               id="com.vinn.utils.ui.views.hopper.mode"
+               id="com.vinn.utils.view.hopper.mode"
                value="set">
          </parameter>
       </key>
    </extension>
    <extension
-         point="org.eclipse.ui.commands">
-      <command
-            categoryId="org.eclipse.ui.category.views"
-            defaultHandler="com.vinn.utils.font.handlers.FontSizeChangeHandler"
-            id="com.vinn.utils.font.command.increase"
-            name="Grow Font">
-      </command>
-      <command
-            categoryId="org.eclipse.ui.category.views"
-            defaultHandler="com.vinn.utils.font.handlers.FontSizeChangeHandler"
-            id="com.vinn.utils.font.command.decrease"
-            name="Shrink Font">
-      </command>
-      <command
-            categoryId="org.eclipse.ui.category.views"
-            defaultHandler="com.vinn.utils.font.handlers.FontSizeChangeHandler"
-            id="com.vinn.utils.font.command.reset"
-            name="Normal Font">
-      </command>
-      <command
-            defaultHandler="com.vinn.utils.actions.RemoveAllProblemMarkersHandler"
-            id="com.vinn.utils.commands.removeproblems"
-            name="Remove Problem Markers">
-      </command>
-      <command
-            defaultHandler="com.vinn.utils.actions.RefreshProjectsHandler"
-            id="com.vinn.utils.commands.refreshall"
-            name="Refresh Projects">
-      </command>
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?before=window">
+         <menu
+               id="com.vinn.utils.tools.menu"
+               label="Tools">
+            <command
+                  commandId="com.vinn.utils.font.increase"
+                  defaultHandler="com.vinn.cdt.handlers.RemoveAllProblemMarkersHandler"
+                  id="com.vinn.utils.font.command.increase.id"
+                  label="Grow Font">
+            </command>
+            <command
+                  commandId="com.vinn.utils.font.decrease"
+                  defaultHandler="com.vinn.ui.utils.handlers.FontSizeChangeHandler"
+                  id="com.vinn.utils.font.command.decrease.id"
+                  label="Shrink Font">
+            </command>
+            <command
+                  commandId="com.vinn.utils.font.reset"
+                  defaultHandler="com.vinn.cdt.handlers.RemoveAllProblemMarkersHandler"
+                  id="com.vinn.utils.font.command.reset.id"
+                  label="Normal Font">
+            </command>
+            <separator
+                  name="com.vinn.ui.utils.separator4"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.edit.text.toggleShowWhitespaceCharacters"
+                  disabledIcon="platform:/plugin/org.eclipse.ui.workbench.texteditor/icons/full/dtool16/show_whitespace_chars.gif"
+                  icon="platform:/plugin/org.eclipse.ui.workbench.texteditor/icons/full/etool16/show_whitespace_chars.gif"
+                  id="com.vinn.utils.editor.showwhitespace"
+                  label="Toggle Show Whitespace"
+                  style="push">
+            </command>
+            <command
+                  commandId="com.vinn.utils.remove.problems"
+                  defaultHandler="com.vinn.cdt.handlers.RemoveAllProblemMarkersHandler"
+                  icon="icons/problems_view.gif"
+                  id="com.vinn.utils.commands.removeproblems.id"
+                  label="Remove Problem Markers">
+            </command>
+            <separator
+                  name="com.vinn.ui.utils.separator5"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="org.eclipse.ui.edit.text.removeTrailingWhitespace"
+                  label="Remove Trailing Whitespace"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.cdt.ui.edit.text.c.format"
+                  icon="icons/style.gif"
+                  label="Format (Code Style Fixup)"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI=" menu:com.vinn.workspace.menu?after=additions">
+         <separator
+               name="com.vinn.ui.utils.separator6"
+               visible="true">
+         </separator>
+         <command
+               commandId="com.vinn.utils.refresh.projects"
+               icon="platform:/plugin/org.eclipse.ui.ide/icons/full/elcl16/refresh_nav.gif"
+               label="Refresh Projects"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="com.vinn.utils.ui.views.toolbar">
+            <command
+                  commandId="com.vinn.utils.view.hopper"
+                  icon="icons/view_restore.gif"
+                  id="com.vinn.utils.hopper"
+                  label="Restore Views"
+                  style="pulldown"
+                  tooltip="Restore previously stored views">
+               <parameter
+                     name="com.vinn.utils.view.hopper.mode"
+                     value="restore">
+               </parameter>
+            </command>
+         </toolbar>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:com.vinn.utils.hopper">
+         <command
+               commandId="com.vinn.utils.view.hopper"
+               label="Store Views"
+               style="push"
+               tooltip="Save the views currently open for restore later">
+            <parameter
+                  name="com.vinn.utils.view.hopper.mode"
+                  value="set">
+            </parameter>
+         </command>
+         <command
+               commandId="com.vinn.utils.view.hopper"
+               icon="icons/view_restore.gif"
+               label="Restore Views"
+               style="pulldown"
+               tooltip="Restore previously stored views">
+            <parameter
+                  name="com.vinn.utils.view.hopper.mode"
+                  value="restore">
+            </parameter>
+         </command>
+         <command
+               commandId="com.vinn.utils.view.hopper"
+               label="Undo Restore Views"
+               style="push"
+               tooltip="Undo the last restore and bring back the views">
+            <parameter
+                  name="com.vinn.utils.view.hopper.mode"
+                  value="undo">
+            </parameter>
+         </command>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.activities">
@@ -240,196 +430,6 @@
             isEqualityPattern="false"
             pattern="org.epic.*">
       </activityPatternBinding> -->
-   </extension>
-   <extension
-         point="org.eclipse.ui.services">
-      <sourceProvider
-            provider="com.vinn.utils.menu.VinnMenuViewActivityState">
-         <variable
-               name="com.vinn.utils.menu.basic.active"
-               priorityLevel="workbench">
-         </variable>
-         <variable
-               name="com.vinn.utils.menu.cdtbuild.active"
-               priorityLevel="workbench">
-         </variable>
-         <variable
-               name="com.vinn.utils.menu.other.active"
-               priorityLevel="workbench">
-         </variable>
-      </sourceProvider>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?before=window">
-         <menu
-               id="com.vinn.utils.tools.menu"
-               label="Tools">
-            <command
-                  commandId="com.vinn.utils.font.command.increase"
-                  defaultHandler="com.vinn.cdt.handlers.RemoveAllProblemMarkersHandler"
-                  id="com.vinn.utils.font.command.increase.id"
-                  label="Grow Font"
-                  name="com.vinn.utils.commands.removeproblems">
-            </command>
-            <command
-                  commandId="com.vinn.utils.font.command.decrease"
-                  defaultHandler="com.vinn.ui.utils.handlers.FontSizeChangeHandler"
-                  id="com.vinn.utils.font.command.decrease.id"
-                  label="Shrink Font"
-                  name="com.vinn.utils.commands.removeproblems">
-            </command>
-            <command
-                  commandId="com.vinn.utils.font.command.reset"
-                  defaultHandler="com.vinn.cdt.handlers.RemoveAllProblemMarkersHandler"
-                  id="com.vinn.utils.font.command.reset.id"
-                  label="Normal Font"
-                  name="com.vinn.utils.commands.removeproblems">
-            </command>
-            <separator
-                  name="com.vinn.ui.utils.separator4"
-                  visible="true">
-            </separator>
-            <command
-                  commandId="org.eclipse.ui.edit.text.toggleShowWhitespaceCharacters"
-                  disabledIcon="platform:/plugin/org.eclipse.ui.workbench.texteditor/icons/full/dtool16/show_whitespace_chars.gif"
-                  icon="platform:/plugin/org.eclipse.ui.workbench.texteditor/icons/full/etool16/show_whitespace_chars.gif"
-                  id="com.vinn.utils.editor.showwhitespace"
-                  label="Toggle Show Whitespace"
-                  style="push">
-            </command>
-            <command
-                  commandId="org.eclipse.ui.edit.text.removeTrailingWhitespace"
-                  label="Remove Trailing Whitespace"
-                  style="push">
-            </command>
-            <command
-                  commandId="org.eclipse.cdt.ui.edit.text.c.format"
-                  icon="icons/style.gif"
-                  label="Format (Code Style Fixup)"
-                  style="push">
-            </command>
-            <separator
-                  name="com.vinn.ui.utils.separator5"
-                  visible="true">
-            </separator>
-            <command
-                  commandId="com.vinn.utils.commands.removeproblems"
-                  defaultHandler="com.vinn.cdt.handlers.RemoveAllProblemMarkersHandler"
-                  icon="icons/problems_view.gif"
-                  id="com.vinn.utils.commands.removeproblems.id"
-                  label="Remove Problem Markers"
-                  name="com.vinn.utils.commands.removeproblems">
-            </command>
-            <separator
-                  name="com.vinn.ui.utils.separator6"
-                  visible="true">
-            </separator>
-            <command
-                  commandId="com.vinn.utils.commands.refreshall"
-                  icon="platform:/plugin/org.eclipse.ui.ide/icons/full/elcl16/refresh_nav.gif"
-                  label="Refresh Projects"
-                  style="push">
-            </command>
-         </menu>
-      </menuContribution>
-   </extension>
-   <extension
-         point="org.eclipse.core.runtime.preferences">
-      <initializer
-            class="com.vinn.utils.font.preferences.VinnFontUtilsPreferenceInitializer">
-      </initializer>
-      <initializer
-            class="com.vinn.utils.menu.preferences.VinnMenuPreferenceInitializer">
-      </initializer>
-   </extension>
-   <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
-            category="org.eclipse.ui.preferencePages.Views"
-            class="com.vinn.utils.font.preferences.VinnFontUtilsPreferencePage"
-            id="com.vinn.utils.preferences.EnvironmentPreferencePage"
-            name="Font Size">
-      </page>
-      <page
-            category="org.eclipse.ui.preferencePages.Workbench"
-            class="com.vinn.utils.menu.preferences.VinnMenuPreferencePage"
-            id="com.vinn.utils.preferences.MenuPreferencePage"
-            name="Context Menu">
-      </page>
-   </extension>
-   <extension
-         point="org.eclipse.ui.commands">
-      <command
-            defaultHandler="com.vinn.ui.view.handlers.ViewHopperHandler"
-            description="View Hopper"
-            id="com.vinn.utils.ui.views.hopper"
-            name="View Hopper">
-         <commandParameter
-               id="com.vinn.utils.ui.views.hopper.mode"
-               name="name"
-               optional="true"
-               values="set, undo, restore">
-         </commandParameter>
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            allPopups="false"
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="com.vinn.utils.ui.views.toolbar">
-            <command
-                  commandId="com.vinn.utils.ui.views.hopper"
-                  icon="icons/view_restore.gif"
-                  id="com.vinn.utils.ui.views.hopper.menu"
-                  label="Restore Views"
-                  style="pulldown"
-                  tooltip="Restore previously stored views">
-               <parameter
-                     name="com.vinn.utils.ui.views.hopper.mode"
-                     value="restore">
-               </parameter>
-            </command>
-         </toolbar>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI="menu:com.vinn.utils.ui.views.hopper.menu">
-         <command
-               commandId="com.vinn.utils.ui.views.hopper"
-               label="Store Views"
-               style="push"
-               tooltip="Save the views currently open for restore later">
-            <parameter
-                  name="com.vinn.utils.ui.views.hopper.mode"
-                  value="set">
-            </parameter>
-         </command>
-         <command
-               commandId="com.vinn.utils.ui.views.hopper"
-               icon="icons/view_restore.gif"
-               label="Restore Views"
-               style="pulldown"
-               tooltip="Restore previously stored views">
-            <parameter
-                  name="com.vinn.utils.ui.views.hopper.mode"
-                  value="restore">
-            </parameter>
-         </command>
-         <command
-               commandId="com.vinn.utils.ui.views.hopper"
-               label="Undo Restore Views"
-               style="push"
-               tooltip="Undo the last restore and bring back the views">
-            <parameter
-                  name="com.vinn.utils.ui.views.hopper.mode"
-                  value="undo">
-            </parameter>
-         </command>
-      </menuContribution>
    </extension>
 
 </plugin>

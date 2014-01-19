@@ -1,3 +1,7 @@
+/*
+ * Copyright Oliver Vinn 2013
+ */
+
 package com.vinn.utils;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;

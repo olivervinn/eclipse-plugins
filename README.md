@@ -62,7 +62,7 @@ The CDT plugin surfaces some control over the indexer and across projects.
 * Stop the indexer
 
 
-![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/environment.png)
+![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/proj_workspace_menu.png)
 
 
 **Associate (cross reference) C projects**
@@ -90,7 +90,12 @@ If you have a file that lists additional folders not used by the configuration i
 
 When active the project view will highlight with the green indicator seen below. Click the icon to remove all resource filters and definitions.
 
-![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/environment_indicator.png)
+![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/workspace_conf_unset.png)
+
+![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/conf_selection.png)
+
+![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/workspace_conf_set.png)
+
 
 
 **Rebuild all project indexes**

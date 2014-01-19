@@ -1,3 +1,7 @@
+/*
+ * Copyright Oliver Vinn 2013
+ */
+
 package com.vinn.cdt;
 
 import java.io.BufferedReader;
@@ -19,7 +23,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import com.vinn.cdt.preferences.VinnBuildPreferenceConstants;
+import com.vinn.cdt.preferences.BuildConfPreferenceConstants;
 
 public class Utils {
 
@@ -57,7 +61,7 @@ public class Utils {
   public static boolean isProjectNameExcluded(String name) {
     IPreferenceStore p = Activator.getDefault().getPreferenceStore();
     final String[] excludedEndings =
-        p.getString(VinnBuildPreferenceConstants.P_EXCLUDED_PROJECT_NAME_ENDINGS).split(";");
+        p.getString(BuildConfPreferenceConstants.P_EXCLUDED_PROJECT_NAME_ENDINGS).split(";");
     for (String excludedEnding : excludedEndings) {
       if (name.endsWith(excludedEnding)) return true;
     }
