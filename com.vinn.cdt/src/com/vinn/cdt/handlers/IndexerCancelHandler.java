@@ -12,7 +12,7 @@ import org.eclipse.core.commands.ExecutionException;
 @SuppressWarnings("restriction")
 public class IndexerCancelHandler extends AbstractHandler {
 
-  public static final String ID = "com.vinn.cdt.build.indexer.cancel"; //$NON-NLS-1$
+  public static final String ID = "com.vinn.cdt.indexer.cancel"; //$NON-NLS-1$
 
   @Override
   public Object execute(ExecutionEvent event) throws ExecutionException {

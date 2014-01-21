@@ -16,7 +16,7 @@ import com.vinn.cdt.Utils;
 
 public class IndexerRebuildHandler extends AbstractHandler {
 
-  public final static String ID = "com.vinn.cdt.build.indexer.rebuild"; //$NON-NLS-1$
+  public final static String ID = "com.vinn.cdt.indexer.rebuild"; //$NON-NLS-1$
 
   @Override
   public Object execute(ExecutionEvent event) throws ExecutionException {

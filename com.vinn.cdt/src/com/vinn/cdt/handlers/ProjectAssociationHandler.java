@@ -26,7 +26,7 @@ import com.vinn.cdt.preferences.BuildConfPreferenceConstants;
 
 public class ProjectAssociationHandler extends AbstractHandler {
 
-  public static final String ID = "com.vinn.cdt.build.linkprojects"; //$NON-NLS-1$
+  public static final String ID = "com.vinn.cdt.linkprojects"; //$NON-NLS-1$
 
   @Override
   public Object execute(ExecutionEvent event) throws ExecutionException {

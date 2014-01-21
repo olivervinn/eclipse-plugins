@@ -2,7 +2,7 @@
  * Copyright Oliver Vinn 2013
  */
 
-package com.vinn.utils.handlers.workspace;
+package com.vinn.utils.workspace.handlers;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;

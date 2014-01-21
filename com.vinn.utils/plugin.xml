@@ -51,34 +51,34 @@
       </commandParameterType>
       <command
             categoryId="org.eclipse.ui.category.views"
-            defaultHandler="com.vinn.utils.handlers.view.FontSizeChangeHandler"
+            defaultHandler="com.vinn.utils.view.handlers.FontSizeChangeHandler"
             id="com.vinn.utils.font.increase"
             name="Grow Font">
       </command>
       <command
             categoryId="org.eclipse.ui.category.views"
-            defaultHandler="com.vinn.utils.handlers.view.FontSizeChangeHandler"
+            defaultHandler="com.vinn.utils.view.handlers.FontSizeChangeHandler"
             id="com.vinn.utils.font.decrease"
             name="Shrink Font">
       </command>
       <command
             categoryId="org.eclipse.ui.category.views"
-            defaultHandler="com.vinn.utils.handlers.view.FontSizeChangeHandler"
+            defaultHandler="com.vinn.utils.view.handlers.FontSizeChangeHandler"
             id="com.vinn.utils.font.reset"
             name="Normal Font">
       </command>
       <command
-            defaultHandler="com.vinn.utils.handlers.workspace.RemoveAllProblemMarkersHandler"
+            defaultHandler="com.vinn.utils.workspace.handlers.RemoveAllProblemMarkersHandler"
             id="com.vinn.utils.remove.problems"
             name="Remove Problem Markers">
       </command>
       <command
-            defaultHandler="com.vinn.utils.handlers.workspace.RefreshProjectsHandler"
+            defaultHandler="com.vinn.utils.workspace.handlers.RefreshProjectsHandler"
             id="com.vinn.utils.refresh.projects"
             name="Refresh Projects">
       </command>
       <command
-            defaultHandler="com.vinn.utils.handlers.view.ViewHopperHandler"
+            defaultHandler="com.vinn.utils.view.handlers.ViewHopperHandler"
             description="View Hopper"
             id="com.vinn.utils.view.hopper"
             name="View Hopper">
