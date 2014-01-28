@@ -143,6 +143,7 @@
             <command
                   commandId="com.vinn.utils.font.increase"
                   defaultHandler="com.vinn.cdt.handlers.RemoveAllProblemMarkersHandler"
+                  icon="icons/fontUp.gif"
                   id="com.vinn.utils.font.command.increase.id"
                   label="Grow Font">
             </command>
@@ -163,11 +164,8 @@
                   visible="true">
             </separator>
             <command
-                  commandId="org.eclipse.ui.edit.text.toggleShowWhitespaceCharacters"
-                  disabledIcon="platform:/plugin/org.eclipse.ui.workbench.texteditor/icons/full/dtool16/show_whitespace_chars.gif"
-                  icon="platform:/plugin/org.eclipse.ui.workbench.texteditor/icons/full/etool16/show_whitespace_chars.gif"
-                  id="com.vinn.utils.editor.showwhitespace"
-                  label="Toggle Show Whitespace"
+                  commandId="org.eclipse.ui.edit.text.removeTrailingWhitespace"
+                  label="Remove Trailing Whitespace"
                   style="push">
             </command>
             <command
@@ -182,31 +180,24 @@
                   visible="true">
             </separator>
             <command
-                  commandId="org.eclipse.ui.edit.text.removeTrailingWhitespace"
-                  label="Remove Trailing Whitespace"
+                  commandId="org.eclipse.ui.edit.text.toggleShowWhitespaceCharacters"
+                  disabledIcon="platform:/plugin/org.eclipse.ui.workbench.texteditor/icons/full/dtool16/show_whitespace_chars.gif"
+                  icon="platform:/plugin/org.eclipse.ui.workbench.texteditor/icons/full/etool16/show_whitespace_chars.gif"
+                  id="com.vinn.utils.editor.showwhitespace"
+                  label="Toggle Show Whitespace"
                   style="push">
             </command>
+            <separator
+                  name="com.vinn.ui.utils.separator6"
+                  visible="true">
+            </separator>
             <command
-                  commandId="org.eclipse.cdt.ui.edit.text.c.format"
-                  icon="icons/style.gif"
-                  label="Format (Code Style Fixup)"
+                  commandId="com.vinn.utils.refresh.projects"
+                  icon="platform:/plugin/org.eclipse.ui.ide/icons/full/elcl16/refresh_nav.gif"
+                  label="Refresh Projects"
                   style="push">
             </command>
          </menu>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
-            locationURI=" menu:com.vinn.workspace.menu?after=additions">
-         <separator
-               name="com.vinn.ui.utils.separator6"
-               visible="true">
-         </separator>
-         <command
-               commandId="com.vinn.utils.refresh.projects"
-               icon="platform:/plugin/org.eclipse.ui.ide/icons/full/elcl16/refresh_nav.gif"
-               label="Refresh Projects"
-               style="push">
-         </command>
       </menuContribution>
       <menuContribution
             allPopups="false"

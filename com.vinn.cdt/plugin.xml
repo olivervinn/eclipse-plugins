@@ -64,6 +64,7 @@
    </extension>
    <extension
          point="org.eclipse.ui.menus">
+         <!--
       <menuContribution
             allPopups="false"
             locationURI="toolbar:org.eclipse.ui.navigator.ProjectExplorer">
@@ -136,6 +137,87 @@
                style="push">
          </command>
       </menuContribution>
+      -->
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="org.eclipse.ui.project.buildAll">
+            <command
+                  commandId="com.vinn.cdt.conf.toggle"
+                  icon="icons/active.gif"
+                  id="com.vinn.workspace.toolbar"
+                  label="Configuaration Active"
+                  style="pulldown">
+            </command>
+         </toolbar>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:com.vinn.workspace.toolbar">
+         <command
+               commandId="com.vinn.cdt.conf.select"
+               icon="icons/active.gif"
+               label="Select Configuration"
+               style="push">
+         </command>
+         <command
+               commandId="com.vinn.cdt.conf.clear"
+               label="Clear Configuration"
+               style="push">
+         </command>
+         <separator
+               name="com.vinn.build.separator2"
+               visible="true">
+         </separator>
+         <command
+               commandId="com.vinn.cdt.pref"
+               label="Preferences"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:project?before=build">
+         <separator
+               name="com.vinn.cdt.separator3"
+               visible="true">
+         </separator>
+         <command
+               commandId="com.vinn.cdt.linkprojects"
+               icon="icons/elements_obj.gif"
+               label="Associate C Projects"
+               style="push">
+         </command>
+         <command
+               commandId="com.vinn.cdt.unlinkprojects"
+               icon="icons/generic_elements.gif"
+               label="Disassociate C Projects"
+               style="push">
+         </command>
+         <separator
+               name="com.vinn.cdt.separator4"
+               visible="true">
+         </separator>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:project?before=projectProperties">
+         <command
+               commandId="com.vinn.cdt.indexer.rebuild"
+               label="Rebuild Indexes"
+               style="push">
+         </command>
+         <command
+               commandId="com.vinn.cdt.indexer.cancel"
+               icon="icons/stop.gif"
+               label="Cancel Indexer"
+               style="push">
+         </command>
+         <separator
+               name="com.vinn.cdt.separator2"
+               visible="true">
+         </separator>
+      </menuContribution>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
@@ -157,7 +239,7 @@
       <page
             category="org.eclipse.cdt.ui.preferences.CPluginPreferencePage"
             class="com.vinn.cdt.preferences.BuildConfPreferencePage"
-            id="com.vinn.cdt.preferences.EnvironmentPreferencePage"
+            id="com.vinn.cdt.preferences.PreferencePage"
             name="Workspace">
       </page>
    </extension>
@@ -224,5 +306,23 @@
       <persistent
             value="true">
       </persistent>
+   </extension>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            adaptable="true"
+            class="com.vinn.cdt.decorators.Label"
+            id="com.vinn.cdt.decorator"
+            label="Standard Build Decorator"
+            lightweight="true"
+            state="true">
+         <enablement>
+            <or>
+               <objectClass
+                     name="org.eclipse.core.resources.IContainer">
+               </objectClass>
+             </or>
+         </enablement>
+      </decorator>
    </extension>
 </plugin>
