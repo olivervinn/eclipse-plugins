@@ -5,6 +5,7 @@
 package com.vinn.cdt.conf;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -14,6 +15,13 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.cdt.core.language.settings.providers.ILanguageSettingsEditableProvider;
+import org.eclipse.cdt.core.language.settings.providers.ILanguageSettingsProvider;
+import org.eclipse.cdt.core.language.settings.providers.LanguageSettingsBaseProvider;
+import org.eclipse.cdt.core.language.settings.providers.LanguageSettingsManager;
+import org.eclipse.cdt.core.language.settings.providers.LanguageSettingsSerializableProvider;
+import org.eclipse.cdt.core.language.settings.providers.LanguageSettingsStorage;
+import org.eclipse.cdt.core.language.settings.providers.ScannerDiscoveryLegacySupport;
 import org.eclipse.cdt.core.model.CoreModel;
 import org.eclipse.cdt.core.model.ICProject;
 import org.eclipse.cdt.core.settings.model.CMacroEntry;
@@ -22,6 +30,7 @@ import org.eclipse.cdt.core.settings.model.ICFolderDescription;
 import org.eclipse.cdt.core.settings.model.ICLanguageSetting;
 import org.eclipse.cdt.core.settings.model.ICLanguageSettingEntry;
 import org.eclipse.cdt.core.settings.model.ICProjectDescription;
+import org.eclipse.cdt.core.settings.model.ICProjectDescriptionWorkspacePreferences;
 import org.eclipse.cdt.core.settings.model.ICSettingEntry;
 import org.eclipse.core.resources.FileInfoMatcherDescription;
 import org.eclipse.core.resources.IContainer;
@@ -47,7 +56,7 @@ public class ConfigurationManager {
   private static volatile ConfigurationManager instance = null;
 
   public static final String CONFIGURATION_ID = "com.vinn.cdt.conf.dynamic"; //$NON-NLS-1$
-  public static final String CONFIGURATION_NAME = "Dynamic Configuration"; //$NON-NLS-1$
+  public static final String CONFIGURATION_NAME = "Dynamic"; //$NON-NLS-1$
 
   private IPreferenceStore prf;
   private List<ConfigurationEntity> fConfigurationEntities;
@@ -58,9 +67,9 @@ public class ConfigurationManager {
     private IResource fRoot;
     private IResource fDefinesFile;
     private IResource fFilterFile;
-    
-    public Map<String,String> macroValues;
-    public Map<String,String> filterValues;
+
+    public Map<String, String> macroValues;
+    public Map<String, String> filterValues;
 
     public IResource getConfRoot() {
       return fRoot;
@@ -78,6 +87,10 @@ public class ConfigurationManager {
       fRoot = configuration;
       fDefinesFile = defines;
       fFilterFile = filter;
+    }
+
+    public String getConfName() {
+      return fRoot.getProjectRelativePath().toString();
     }
   }
 
@@ -284,8 +297,7 @@ public class ConfigurationManager {
     IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
     root = root.replaceFirst("^F/", "");
     IResource r = workspaceRoot.findMember(root);
-    if (r != null)
-      return new ConfigurationEntity(r, findDefineFile(r), findFilterFile(r));
+    if (r != null) return new ConfigurationEntity(r, findDefineFile(r), findFilterFile(r));
     return null;
   }
 
@@ -309,8 +321,7 @@ public class ConfigurationManager {
 
     IProject confHomeProject = workspaceRoot.getProject(projectName);
 
-    if (!confHomeProject.isAccessible() ||
-        confHomeProject.getLocation() == null) {
+    if (!confHomeProject.isAccessible() || confHomeProject.getLocation() == null) {
       return fConfigurationEntities;
     }
 
@@ -373,7 +384,7 @@ public class ConfigurationManager {
   private void setEnvironmentWithText(String text, String cDefineExtractor) {
 
     Map<String, String> defineMap = new HashMap<String, String>();
-    
+
     if (text != null && cDefineExtractor != null) {
       Pattern p = Pattern.compile(cDefineExtractor);
       Matcher m = p.matcher(text);
@@ -383,9 +394,8 @@ public class ConfigurationManager {
         System.out.println(s);
       }
     }
-    
-    if (fActiveConfigurationEntity != null)
-      fActiveConfigurationEntity.macroValues = defineMap;
+
+    if (fActiveConfigurationEntity != null) fActiveConfigurationEntity.macroValues = defineMap;
 
     // If we have some apply them to all eligible projects
     ICProject[] projects = Utils.getCProjects();
@@ -409,10 +419,13 @@ public class ConfigurationManager {
   }
 
   void setProjectMacros(ICProject project, ICLanguageSettingEntry[] macros) {
+
+    // Configuration
+
     ICProjectDescription pDescription =
         CoreModel.getDefault().getProjectDescription(project.getProject());
-
     ICConfigurationDescription activeCfg = pDescription.getConfigurationById(CONFIGURATION_ID);
+
     if (activeCfg == null)
       try {
         activeCfg =
@@ -420,28 +433,53 @@ public class ConfigurationManager {
                 pDescription.getDefaultSettingConfiguration());
       } catch (CoreException e1) {
         e1.printStackTrace();
+        return;
       }
 
     activeCfg.setActive();
+    activeCfg.setName(CONFIGURATION_NAME + " - "
+        + ConfigurationManager.getInstance().getActiveConfName());
 
-    ICFolderDescription folderDescription = activeCfg.getRootFolderDescription();
-    ICLanguageSetting[] languageSettings = folderDescription.getLanguageSettings();
 
-    for (int i = 0; i < languageSettings.length; i++) {
-      String langId = languageSettings[i].getLanguageId();
-      if (langId != null && langId.contains("org.eclipse.cdt.core.gcc")) //$NON-NLS-1$
-      {
-        languageSettings[i].setSettingEntries(ICSettingEntry.MACRO | ICSettingEntry.LOCAL, macros);
+    // Settings provider
 
-        try {
-          CoreModel.getDefault().setProjectDescription(project.getProject(), pDescription);
+    ILanguageSettingsProvider userSettingsProvider =
+        LanguageSettingsManager
+            .getWorkspaceProvider("org.eclipse.cdt.ui.UserLanguageSettingsProvider");
 
-        } catch (CoreException e) {
-          e.printStackTrace();
-        }
+    ILanguageSettingsEditableProvider rawProvider =
+        (ILanguageSettingsEditableProvider) LanguageSettingsManager
+            .getRawProvider(userSettingsProvider);
 
-        break;
-      }
+    ILanguageSettingsEditableProvider newProvider = null;
+    try {
+      newProvider = ((ILanguageSettingsEditableProvider) rawProvider).cloneShallow();
+
+      // Values
+
+      List<ICLanguageSettingEntry> l = new ArrayList<ICLanguageSettingEntry>();
+      l = Arrays.asList(macros);
+      newProvider.setSettingEntries(activeCfg, null, null, l);
+
+      // Store location
+
+      LanguageSettingsManager.setStoringEntriesInProjectArea(
+          (LanguageSettingsSerializableProvider) newProvider, false);
+
+    } catch (CloneNotSupportedException e2) {
+      // TODO Auto-generated catch block
+      e2.printStackTrace();
     }
+
+    try {
+      CoreModel.getDefault().setProjectDescription(project.getProject(), pDescription);
+    } catch (CoreException e) {
+      e.printStackTrace();
+    }
+  }
+
+
+  private String getActiveConfName() {
+    return fActiveConfigurationEntity == null ? "None" : fActiveConfigurationEntity.getConfName();
   }
 }

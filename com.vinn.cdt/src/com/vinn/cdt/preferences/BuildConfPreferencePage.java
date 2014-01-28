@@ -20,6 +20,8 @@ import com.vinn.utils.preferences.ui.SpacerFieldEditor;
 public class BuildConfPreferencePage extends FieldEditorPreferencePage
     implements
       IWorkbenchPreferencePage {
+  
+  public static final String ID = "com.vinn.cdt.preferences.PreferencePage"; //$NON-NLS-1$
 
   List<StringFieldEditor> stringRegexEditors;
 
