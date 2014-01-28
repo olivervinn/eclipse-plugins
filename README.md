@@ -47,8 +47,7 @@ With one click refresh all workspace project resources
 **Other**
 
 * Remove trailing whitespace (Select a container and a dialog will open to apply to multiple resources at once.)
-* Format the selected resource(s)
-* Toggle Whitespace (useful for Eclipse 4.x where this disappears from the toolbar)
+* Toggle Whitespace (useful for Eclipse 4.x where this sometimes disappears from the toolbar)
 
 
 CDT Additions
@@ -57,7 +56,6 @@ CDT Additions
 The CDT plugin surfaces some control over the indexer and across projects. 
 
 * Associate (cross reference) C projects
-* Cross project configuration selector
 * Rebuild all project indexes
 * Stop the indexer
 
@@ -76,26 +74,6 @@ It is possible to exclude projects by name endings via the preferences page
 *Preferences > C/C++ > Workspace *
 
 ![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/preferences.png)
-
-
-**Cross project configuration selector**
-
-If you have an output that captures the C defines and a way to identify the different configurations (be it 1) you may be able to use this to set the c defines in all projects.
-
-Using the preferences page to define epressions to identify a configuration and select files with C define and folder information it is possible to set the project definitions and get an accurate index.
-
-Select the configuration from the dialog selection. The files will be parsed and the definitions set. Hides other configurations using resource filters and then kicks off the indexer. 
-
-If you have a file that lists additional folders not used by the configuration it shall also be parsed and those will be hidden too prior to rebuilding the index.
-
-When active the project view will highlight with the green indicator seen below. Click the icon to remove all resource filters and definitions.
-
-![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/workspace_conf_unset.png)
-
-![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/conf_selection.png)
-
-![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/workspace_conf_set.png)
-
 
 
 **Rebuild all project indexes**
