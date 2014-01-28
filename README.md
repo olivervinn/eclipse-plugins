@@ -67,13 +67,11 @@ The CDT plugin surfaces some control over the indexer and across projects.
 
 With <kbd>CTRL+ALT+L</kbd> or the project toolbar you can associate all the C projects in the workspace (adds a dynamic reference that is stored in the workspace and not the project file). Use <kbd>CTRL+ALT+U</kbd> to disassociate.
 
-This association is done with dynamic references so stored in the workspace. So you wont see anything in the references property page. This stops CM systems picking up changes to the .cproject files that standard references will modify.
+This association is done using dynamic references as such the relationship is stored in the workspace and doesn't change .project/.cproject file. Useful for when you are using git or similar and you don't want to continuously be told about a project file change.
 
 It is possible to exclude projects by name endings via the preferences page
 
-*Preferences > C/C++ > Workspace *
-
-![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/preferences.png)
+*Preferences > C/C++ > Workspace*
 
 
 **Rebuild all project indexes**

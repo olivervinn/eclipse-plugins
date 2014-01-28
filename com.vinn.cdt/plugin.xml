@@ -262,52 +262,6 @@
       </perspectiveExtension>
    </extension>
    <extension
-         point="org.eclipse.ui.views">
-      <category
-            id="com.vinn.cdt"
-            name="Vinn CDT">
-      </category>
-      <view
-            category="com.vinn.cdt"
-            class="com.vinn.cdt.conf.views.ConfigurationView"
-            icon="icons/active.gif"
-            id="com.vinn.cdt.views.ConfigurationView"
-            name="Configuration View">
-      </view>
-   </extension>
-   <extension
-         id="com.vinn.cdt.vproject"
-         name="Vinn Project"
-         point="org.eclipse.core.resources.natures">
-      <runtime>
-         <run
-               class="com.vinn.cdt.ProjectNature">
-         </run>
-      </runtime>
-      <requires-nature
-            id="org.eclipse.cdt.core.cnature">
-      </requires-nature>
-   </extension>
-   <extension
-         point="org.eclipse.ui.ide.projectNatureImages">
-      <image
-            icon="icons/active.gif"
-            id="com.vinn.cdt.vproject.image"
-            natureId="com.vinn.cdt.vproject">
-      </image>
-   </extension>
-   <extension
-         id="xmlProblem"
-         name="XML Problem"
-         point="org.eclipse.core.resources.markers">
-      <super
-            type="org.eclipse.core.resources.problemmarker">
-      </super>
-      <persistent
-            value="true">
-      </persistent>
-   </extension>
-   <extension
          point="org.eclipse.ui.decorators">
       <decorator
             adaptable="true"
