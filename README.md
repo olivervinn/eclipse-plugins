@@ -26,13 +26,13 @@ Yet another font size changer. Using <kbd>CTRL+SHIFT+=</kbd> to increase and <kb
 
 
 
-**Remove all problem markers**
+**Remove Problem markers**
 
 With one click remove all problem markers from all workspace projects.
 
 **Hide Context Menu Items**
 
-The Editor context menu is seriously over populated so using activities take back control. Three tier hiding: basic copy-paste... then the build commands that a non managed project dont use. Finally to tame plugins like Easy shell and PyDev. Each group can be disabled via the preferneces page.
+The Editor context menu is seriously over populated so activities are used to take back control. Three tier hiding: basic copy-paste... then the build commands that a non managed project doesn't use. Finally to tame plugins like Easy shell and PyDev. Each group can be disabled via the preferneces page.
 
 *Preferences > General > Context Menu*
 
@@ -50,7 +50,7 @@ With one click refresh all workspace project resources
 * Toggle Whitespace (useful for Eclipse 4.x where this sometimes disappears from the toolbar)
 
 
-CDT Additions
+CDT Specific
 ==
 
 The CDT plugin surfaces some control over the indexer and across projects. 
