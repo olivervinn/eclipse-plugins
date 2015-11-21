@@ -30,7 +30,7 @@ public class ConfigurationClearHandler extends AbstractHandler {
     // Update state
     ConfigurationActiveState.getInstance().setIsActive(false);
 
-    ICommandService commandService = (ICommandService) window.getService(ICommandService.class);
+    ICommandService commandService = window.getService(ICommandService.class);
     if (commandService != null) {
       commandService.refreshElements(ConfigurationToggleHandler.ID, null);
     }

@@ -23,15 +23,15 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.preference.IPreferenceStore;
 
-import com.vinn.cdt.preferences.BuildConfPreferenceConstants;
+import com.vinn.cdt.preferences.PreferenceConstants;
 
 public class Utils {
 
 
   public static void rebuildCIndex() {
     ICProject[] cProjects = Utils.getCProjects();
-    for (int i = 0; i < cProjects.length; i++) {
-      CCorePlugin.getIndexManager().reindex(cProjects[i]);
+    for (ICProject cProject : cProjects) {
+      CCorePlugin.getIndexManager().reindex(cProject);
     }
   }
 
@@ -58,17 +58,18 @@ public class Utils {
     }
   }
 
-  public static boolean isProjectNameExcluded(String name) {
-    IPreferenceStore p = Activator.getDefault().getPreferenceStore();
-    final String[] excludedEndings =
-        p.getString(BuildConfPreferenceConstants.P_EXCLUDED_PROJECT_NAME_ENDINGS).split(";");
-    for (String excludedEnding : excludedEndings) {
-      if (name.endsWith(excludedEnding)) return true;
+    public static boolean isProjectNameExcluded(String name) {
+        IPreferenceStore p = Activator.getDefault().getPreferenceStore();
+        final String[] excludedEndings = p.getString(PreferenceConstants.P_EXCLUDED_PROJECT_NAME_ENDINGS)
+                .split(";");
+        for (String excludedEnding : excludedEndings) {
+            if (name.matches(excludedEnding)) {
+                return true;
+            }
+        }
+
+        return false;
     }
-
-    return false;
-  }
-
 
   public static void FindResourceInTree(List<IResource> matchingResources, IPath path,
       IWorkspaceRoot myWorkspaceRoot, Pattern pattern, int depth) {
@@ -81,7 +82,9 @@ public class Utils {
 
     try {
       container = myWorkspaceRoot.getContainerForLocation(path);
-      if (container == null) return;
+      if (container == null) {
+        return;
+    }
 
       IResource[] iResources = container.members();
       for (IResource iR : iResources) {

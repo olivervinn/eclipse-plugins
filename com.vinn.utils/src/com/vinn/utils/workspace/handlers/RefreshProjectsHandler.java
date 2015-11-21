@@ -11,22 +11,37 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 
 public class RefreshProjectsHandler extends AbstractHandler {
 
   @Override
   public Object execute(ExecutionEvent event) throws ExecutionException {
 
-    IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+    final IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
 
-    for (int i = 0; i < projects.length; i++) {
-      try {
-        projects[i].refreshLocal(IResource.DEPTH_INFINITE, null);
-      } catch (CoreException e) {
-        e.printStackTrace();
+    Job job = new Job("Refreshing all projects") {
+      @Override
+      protected IStatus run(IProgressMonitor monitor) {
+
+        for (int i = 0; i < projects.length; i++) {
+          try {
+            projects[i].refreshLocal(IResource.DEPTH_INFINITE, null);
+          } catch (CoreException e) {
+            e.printStackTrace();
+            return Status.CANCEL_STATUS;
+          }
+        }
+        return Status.OK_STATUS;
       }
-    }
+    };
+    job.setPriority(Job.LONG);
+    job.setUser(true);
+    job.schedule();
+
     return null;
   }
 }

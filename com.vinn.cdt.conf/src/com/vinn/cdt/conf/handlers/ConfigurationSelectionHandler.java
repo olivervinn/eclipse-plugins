@@ -42,9 +42,8 @@ public class ConfigurationSelectionHandler extends AbstractHandler {
       final ICommandService commandService =
           (ICommandService) window.getService(ICommandService.class);
       if (commandService != null) {
-        
       }
-      
+
       IRunnableWithProgress operation = new IRunnableWithProgress() {
         public void run(IProgressMonitor monitor) {
           Object[] profiles = dialog.getResult();

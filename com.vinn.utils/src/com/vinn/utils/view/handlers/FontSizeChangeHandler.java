@@ -39,9 +39,14 @@ public class FontSizeChangeHandler extends AbstractHandler {
 
     final String q = "org.eclipse.ui.workbench";
     final String[] keys =
-        {"org.eclipse.jdt.ui.editors.textfont", "org.eclipse.cdt.ui.editors.textfont",
-            "org.eclipse.ui.workbench.texteditor.blockSelectionModeFont",
-            "org.eclipse.jface.textfont"};
+        {"org.eclipse.cdt.ui.editors.textfont", 
+    		"org.eclipse.ui.r30.org.eclipse.cdt.ui.editors.textfont",
+    		"org.eclipse.ui.workbench.texteditor.blockSelectionModeFont",
+    		"org.eclipse.ui.r30.org.eclipse.ui.workbench.texteditor.blockSelectionModeFont",
+    		"org.eclipse.jdt.ui.editors.textfont",
+    		"org.eclipse.ui.r30.org.eclipse.jdt.ui.editors.textfont", 
+    		"org.eclipse.jface.textfont",
+    		"org.eclipse.ui.r30.org.eclipse.jface.textfont"};
 
     IPreferencesService prefService = Platform.getPreferencesService();
     Preferences pref = prefService.getRootNode().node("/instance/" + q);

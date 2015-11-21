@@ -12,6 +12,10 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 
 
 public class RemoveAllProblemMarkersHandler extends AbstractHandler {
@@ -19,19 +23,27 @@ public class RemoveAllProblemMarkersHandler extends AbstractHandler {
   @Override
   public Object execute(ExecutionEvent event) throws ExecutionException {
 
-    IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-    for (IProject project : projects) {
-      try {
-        IMarker[] markers =
-            project.getWorkspace().getRoot().findMarkers(null, true, IResource.DEPTH_INFINITE);
+    Job job = new Job("Removing markers") {
+      @Override
+      protected IStatus run(IProgressMonitor monitor) {
+        IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+        for (IProject project : projects) {
+          try {
+            IMarker[] markers =
+                project.getWorkspace().getRoot().findMarkers(null, true, IResource.DEPTH_INFINITE);
 
-        for (IMarker iMarker : markers) {
-          iMarker.delete();
+            for (IMarker iMarker : markers) {
+              iMarker.delete();
+            }
+          } catch (CoreException e) {
+          }
         }
-      } catch (CoreException e) {
-        e.printStackTrace();
+        return Status.OK_STATUS;
       }
-    }
+    };
+    job.setPriority(Job.LONG);
+    job.setUser(true);
+    job.schedule();
     return null;
   }
 }

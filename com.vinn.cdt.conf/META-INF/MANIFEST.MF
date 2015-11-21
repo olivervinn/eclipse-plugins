@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Vinn CDT Conf
+Bundle-SymbolicName: com.vinn.cdt.conf;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.vinn.cdt.conf.Activator
+Bundle-Vendor: Oliver Vinn
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.cdt.core,
+ org.eclipse.ui.views,
+ org.eclipse.ui.workbench,
+ org.eclipse.ui.ide,
+ org.eclipse.cdt.managedbuilder.core,
+ org.eclipse.swt,
+ org.eclipse.jface,
+ org.eclipse.cdt.codan.core,
+ org.eclipse.cdt.codan.ui,
+ org.eclipse.cdt.codan.core.cxx,
+ org.apache.commons.io,
+ org.eclipse.ui.console,
+ org.eclipse.cdt.ui,
+ org.eclipse.cdt.core.native,
+ org.eclipse.ui.navigator,
+ org.eclipse.ui.navigator.resources,
+ com.vinn.utils
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Import-Package: com.vinn.cdt,
+ com.vinn.cdt.handlers

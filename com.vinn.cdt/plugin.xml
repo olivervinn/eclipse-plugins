@@ -140,43 +140,6 @@
       -->
       <menuContribution
             allPopups="false"
-            locationURI="toolbar:org.eclipse.ui.main.toolbar">
-         <toolbar
-               id="org.eclipse.ui.project.buildAll">
-            <command
-                  commandId="com.vinn.cdt.conf.toggle"
-                  icon="icons/active.gif"
-                  id="com.vinn.workspace.toolbar"
-                  label="Configuaration Active"
-                  style="pulldown">
-            </command>
-         </toolbar>
-      </menuContribution>
-      <menuContribution
-            locationURI="menu:com.vinn.workspace.toolbar">
-         <command
-               commandId="com.vinn.cdt.conf.select"
-               icon="icons/active.gif"
-               label="Select Configuration"
-               style="push">
-         </command>
-         <command
-               commandId="com.vinn.cdt.conf.clear"
-               label="Clear Configuration"
-               style="push">
-         </command>
-         <separator
-               name="com.vinn.build.separator2"
-               visible="true">
-         </separator>
-         <command
-               commandId="com.vinn.cdt.pref"
-               label="Preferences"
-               style="push">
-         </command>
-      </menuContribution>
-      <menuContribution
-            allPopups="false"
             locationURI="menu:project?before=build">
          <separator
                name="com.vinn.cdt.separator3"
@@ -250,33 +213,67 @@
       </initializer>
    </extension>
    <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="org.eclipse.cdt.ui.CPerspective">
-         <view
-               id="com.vinn.cdt.views.ConfigurationView"
-               ratio="0.5"
-               relationship="right"
-               relative="org.eclipse.ui.views.ProblemView">
-         </view>
-      </perspectiveExtension>
+         id="com.vinn.cdt.errorparser.qac"
+         name="Ovinn QAC Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            name="Ovinn QAC Error Parser">
+         <pattern
+               description-expr="L$3 $4"
+               eat-processed-line="true"
+               file-expr="$1"
+               line-expr="$2"
+               regex="(.*)\((.*)\) \+\+ WARNING \+\+: &lt;=8=(.*)"
+               severity="Error">
+         </pattern>
+         <pattern
+               description-expr="L$3 $4"
+               eat-processed-line="true"
+               file-expr="$1"
+               line-expr="$2"
+               regex="(.*)\((.*)\) \+\+ WARNING \+\+: &lt;=([7])=(.*)"
+               severity="Warning">
+         </pattern>
+         <pattern
+               description-expr="L$3 $4"
+               eat-processed-line="true"
+               file-expr="$1"
+               line-expr="$2"
+               regex="(.*)\((.*)\) \+\+ WARNING \+\+: &lt;=([1-6])=(.*)"
+               severity="Info">
+         </pattern>
+      </errorparser>
    </extension>
    <extension
-         point="org.eclipse.ui.decorators">
-      <decorator
-            adaptable="true"
-            class="com.vinn.cdt.decorators.Label"
-            id="com.vinn.cdt.decorator"
-            label="Standard Build Decorator"
-            lightweight="true"
-            state="true">
-         <enablement>
-            <or>
-               <objectClass
-                     name="org.eclipse.core.resources.IContainer">
-               </objectClass>
-             </or>
-         </enablement>
-      </decorator>
+         id="com.vinn.cdt.errorparser.iar"
+         name="Ovinn IAR Parser"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            name="Ovinn IAR Error Parser">
+         <pattern
+               description-expr="$4"
+               eat-processed-line="true"
+               file-expr="$2"
+               line-expr="$3"
+               regex="((.*),(\\d+)  )?((Error)(\\[(\\w+)\\]): *(.*))"
+               severity="Error">
+         </pattern>
+         <pattern
+               description-expr="$4"
+               eat-processed-line="true"
+               file-expr="$2"
+               line-expr="$3"
+               regex="((.*),(\\d+)  )?((Warning)(\\[(\\w+)\\]): *(.*))"
+               severity="Warning">
+         </pattern>
+         <pattern
+               description-expr="$4"
+               eat-processed-line="true"
+               file-expr="$2"
+               line-expr="$3"
+               regex="((.*),(\\d+)  )?(([Remark)(\\[(\\w+)\\]): *(.*))"
+               severity="Info">
+         </pattern>
+      </errorparser>
    </extension>
 </plugin>

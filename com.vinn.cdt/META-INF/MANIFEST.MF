@@ -21,3 +21,5 @@ Import-Package: com.vinn.utils.preferences.ui,
  org.eclipse.ui.texteditor
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: Oliver Vinn
+Export-Package: com.vinn.cdt,
+ com.vinn.cdt.handlers

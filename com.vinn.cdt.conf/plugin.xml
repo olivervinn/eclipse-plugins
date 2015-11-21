@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+<extension
+         point="org.eclipse.ui.services">
+      <sourceProvider
+            provider="com.vinn.cdt.conf.providers.ConfigurationActiveState">
+         <variable
+               name="com.vinn.cdt.conf.active"
+               priorityLevel="workbench">
+         </variable>
+      </sourceProvider>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <commandParameterType
+            id="com.vinn.cdt.conf.active"
+            type="com.vinn.cdt.conf.providers.ConfigurationActiveState">
+      </commandParameterType>
+      <command
+            defaultHandler="com.vinn.cdt.handlers.ProjectAssociationHandler"
+            description="Associate Projects"
+            id="com.vinn.cdt.linkprojects"
+            name="Associate Projects">
+      </command>
+      <command
+            defaultHandler="com.vinn.cdt.handlers.ProjectAssociationHandler"
+            description="Unlink Projects"
+            id="com.vinn.cdt.unlinkprojects"
+            name="Unlink Projects">
+      </command>
+      <command
+            defaultHandler="com.vinn.cdt.conf.handlers.ConfigurationToggleHandler"
+            id="com.vinn.cdt.conf.toggle"
+            name="Toggle Configuration">
+      </command>
+      <command
+            defaultHandler="com.vinn.cdt.conf.handlers.ConfigurationSelectionHandler"
+            id="com.vinn.cdt.conf.select"
+            name="Select Configuration">
+      </command>
+      <command
+            defaultHandler="com.vinn.cdt.conf.handlers.ConfigurationClearHandler"
+            id="com.vinn.cdt.conf.clear"
+            name="Clear Configuration">
+      </command>
+      <command
+            defaultHandler="com.vinn.cdt.handlers.IndexerCancelHandler"
+            description="Cancel Indexer"
+            id="com.vinn.cdt.indexer.cancel"
+            name="Cancel Indexer">
+      </command>
+      <command
+            defaultHandler="com.vinn.cdt.handlers.IndexerRebuildHandler"
+            description="Rebuild Indexes"
+            id="com.vinn.cdt.indexer.rebuild"
+            name="Rebuild Indexes">
+      </command>
+      <command
+            defaultHandler="com.vinn.cdt.conf.handlers.OpenBuildPreferencesPageHandler"
+            id="com.vinn.cdt.pref"
+            name="Preferences">
+      </command>
+      <command
+            defaultHandler="com.vinn.cdt.handlers.SetWorkingSetHandler"
+            id="com.vinn.cdt.workingset"
+            name="Set WorkingSet">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+         <!--
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.navigator.ProjectExplorer">
+         <command
+               commandId="com.vinn.cdt.conf.toggle"
+               icon="icons/active.gif"
+               id="com.vinn.workspace"
+               label="Configuaration Active"
+               style="pulldown">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.cdt.ui.CView">
+         <command
+               commandId="com.vinn.cdt.conf.toggle"
+               icon="icons/active.gif"
+               id="com.vinn.workspace"
+               label="Configuaration Active"
+               style="pulldown">
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:com.vinn.workspace">
+         <command
+               commandId="com.vinn.cdt.conf.select"
+               icon="icons/active.gif"
+               label="Select Configuration"
+               style="push">
+         </command>
+         <command
+               commandId="com.vinn.cdt.conf.clear"
+               label="Clear Configuration"
+               style="push">
+         </command>
+         <separator
+               name="com.vinn.build.separator2"
+               visible="true">
+         </separator>
+         <command
+               commandId="com.vinn.cdt.indexer.rebuild"
+               label="Rebuild Indexes"
+               style="push">
+         </command>
+         <command
+               commandId="com.vinn.cdt.indexer.cancel"
+               icon="icons/stop.gif"
+               label="Cancel Indexer"
+               style="push">
+         </command>
+         <separator
+               name="com.vinn.cdt.separator1"
+               visible="true">
+         </separator>
+         <command
+               commandId="com.vinn.cdt.linkprojects"
+               icon="icons/elements_obj.gif"
+               label="Associate C Projects"
+               style="push">
+         </command>
+         <command
+               commandId="com.vinn.cdt.unlinkprojects"
+               icon="icons/generic_elements.gif"
+               label="Disassociate C Projects"
+               style="push">
+         </command>
+         <command
+               commandId="com.vinn.cdt.pref"
+               label="Preferences"
+               style="push">
+         </command>
+      </menuContribution>
+      -->
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="org.eclipse.ui.project.buildAll">
+            <command
+                  commandId="com.vinn.cdt.conf.toggle"
+                  icon="icons/active.gif"
+                  id="com.vinn.workspace.toolbar"
+                  label="Configuaration Active"
+                  style="pulldown">
+            </command>
+         </toolbar>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:com.vinn.workspace.toolbar">
+         <command
+               commandId="com.vinn.cdt.conf.select"
+               icon="icons/active.gif"
+               label="Select Configuration"
+               style="push">
+         </command>
+         <command
+               commandId="com.vinn.cdt.conf.clear"
+               label="Clear Configuration"
+               style="push">
+         </command>
+         <separator
+               name="com.vinn.build.separator2"
+               visible="true">
+         </separator>
+         <command
+               commandId="com.vinn.cdt.pref"
+               label="Preferences"
+               style="push">
+         </command>
+         <command
+               commandId="com.vinn.cdt.workingset"
+               label="Set Working Set"
+               style="push">
+         </command>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="menu:org.eclipse.ui.main.menu?before=com.vinn.utils.tools.menu">
+         <menu
+               id="com.vinn.utils.workspace.menu"
+               label="CDT">
+            <separator
+                  name="com.vinn.cdt.separator1">
+            </separator>
+            <command
+                  commandId="com.vinn.cdt.linkprojects"
+                  icon="icons/elements_obj.gif"
+                  label="Associate C Projects"
+                  style="push">
+            </command>
+            <command
+                  commandId="com.vinn.cdt.unlinkprojects"
+                  icon="icons/generic_elements.gif"
+                  label="Disassociate C Projects"
+                  style="push">
+            </command>
+            <separator
+                  name="com.vinn.cdt.separator3"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="com.vinn.cdt.conf.select"
+                  icon="icons/active.gif"
+                  label="Select Configuration"
+                  style="push">
+            </command>
+            <separator
+                  name="com.vinn.cdt.separator4"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="com.vinn.cdt.indexer.rebuild"
+                  label="Rebuild Indexes"
+                  style="push">
+            </command>
+            <command
+                  commandId="com.vinn.cdt.indexer.cancel"
+                  icon="icons/stop.gif"
+                  label="Cancel Indexer"
+                  style="push">
+            </command>
+            <separator
+                  name="com.vinn.cdt.separator2"
+                  visible="true">
+            </separator>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="com.vinn.cdt.linkprojects"
+            contextId="org.eclipse.ui.contexts.window"
+            sequence="M1+ALT+L"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
+      </key>
+      <key
+            commandId="com.vinn.cdt.unlinkprojects"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+ALT+U">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.eclipse.cdt.ui.preferences.CPluginPreferencePage"
+            class="com.vinn.cdt.preferences.BuildConfPreferencePage"
+            id="com.vinn.cdt.preferences.PreferencePage"
+            name="Workspace">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="com.vinn.cdt.preferences.BuildConfPreferenceInitializer">
+      </initializer>
+   </extension>
+   <extension
+         point="org.eclipse.ui.decorators">
+      <decorator
+            adaptable="true"
+            class="com.vinn.cdt.decorators.CMBuildDecorator"
+            id="com.vinn.cdt.decorator"
+            label="CM Build Decorator"
+            lightweight="true"
+            state="true">
+         <enablement>
+               <objectClass
+                     name="org.eclipse.core.resources.IResource">
+               </objectClass>
+         </enablement>
+      </decorator>
+   </extension>
+   <extension
+         point="org.eclipse.cdt.codan.core.checkers">
+      <checker
+            class="com.vinn.cdt.codan.style.CodanExternalStyleChecker"
+            id="com.vinn.cdt.checker1"
+            name="Style Checker">
+         <problem
+               category="org.eclipse.cdt.codan.core.categories.CodeStyle"
+               defaultEnabled="true"
+               defaultSeverity="Warning"
+               id="com.vinn.cdt.problem2"
+               messagePattern="[Style]  {0}"
+               multiple="false"
+               name="Style Checker">
+         </problem>
+      </checker>
+   </extension>
+   <extension
+         id="com.vinn.cdt.provider.meta"
+         name="Meta Provider"
+         point="org.eclipse.cdt.core.externalSettingsProvider">
+      <provider
+            class="com.vinn.cdt.CExternalSettingProvider1">
+      </provider>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            class="com.vinncdt.ui.navigator.CMCommonNavigator"
+            icon="icons/sample.gif"
+            id="com.example.test"
+            name="My Common Navigator">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.navigator.viewer">
+      <viewer
+            inheritBindingsFromViewer="org.eclipse.ui.navigator.ProjectExplorer"
+            viewerId="com.example.test">
+      </viewer>
+      <viewerActionBinding
+            viewerId="com.example.test">
+         <includes>
+            <actionExtension
+                  pattern="org.eclipse.ui.navigator.resources.*">
+            </actionExtension>
+         </includes>
+      </viewerActionBinding>
+      <viewerContentBinding
+            viewerId="com.example.test">
+         <includes>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resourceContent">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.filters.*">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.linkHelper">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.resources.workingSets">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.jdt.java.ui.javaContent">
+            </contentExtension>
+            <contentExtension
+                  pattern="org.eclipse.ui.navigator.*">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+         <view
+               id="com.example.test"
+               ratio="0.25"
+               relationship="stack"
+               relative="org.eclipse.ui.navigator.ProjectExplorer">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         id="id1"
+         name="name"
+         point="org.eclipse.cdt.core.ErrorParser">
+      <errorparser
+            name="Ovinn QAC Error Parser">
+         <pattern
+               description-expr="L$3 $4"
+               eat-processed-line="true"
+               file-expr="$1"
+               line-expr="$2"
+               regex="(.*)\((.*)\) \+\+ WARNING \+\+: &lt;=8=(.*)"
+               severity="Error">
+         </pattern>
+         <pattern
+               description-expr="L$3 $4"
+               eat-processed-line="true"
+               file-expr="$1"
+               line-expr="$2"
+               regex="(.*)\((.*)\) \+\+ WARNING \+\+: &lt;=([7])=(.*)"
+               severity="Warning">
+         </pattern>
+         <pattern
+               description-expr="L$3 $4"
+               eat-processed-line="true"
+               file-expr="$1"
+               line-expr="$2"
+               regex="(.*)\((.*)\) \+\+ WARNING \+\+: &lt;=([1-6])=(.*)"
+               severity="Info">
+         </pattern>
+      </errorparser>
+   </extension>
+</plugin>
