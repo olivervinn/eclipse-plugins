@@ -7,7 +7,7 @@ import org.eclipse.core.runtime.CoreException;
 public class ProjectNature implements IProjectNature {
 
   private IProject project;
-  
+
   @Override
   public void configure() throws CoreException {
 

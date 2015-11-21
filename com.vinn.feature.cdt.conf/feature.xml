@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="com.vinn.feature.cdt.conf"
+      label="Vinn Eclipse CDT Conf"
+      version="1.0.0.qualifier"
+      provider-name="Oliver Vinn">
+
+   <description url="http://github.com/ovinn">
+      Eclispe CDT Related Plugins to support working with C Projects
+   </description>
+
+   <copyright>
+      Oliver Vinn (2013, 2014)
+   </copyright>
+
+   <license url="http://choosealicense.com/licenses/eclipse/">
+      Eclipse Public License v1.0
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.cdt.core"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.editors"/>
+   </requires>
+
+   <plugin
+         id="com.vinn.cdt.conf"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

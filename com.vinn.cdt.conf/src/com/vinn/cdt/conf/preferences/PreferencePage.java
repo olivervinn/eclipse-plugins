@@ -24,10 +24,13 @@ public class PreferencePage extends FieldEditorPreferencePage implements IWorkbe
     @Override
     public void createFieldEditors() {
 
-        addField(new WorkspaceFileFieldEditor(PreferenceConstants.P_STRING_BUILD_META_FILE_REGEX,
-                "Build Meta File Selector", getFieldEditorParent()));
-        addField(new WorkspaceFileFieldEditor(PreferenceConstants.P_STRING_BUILD_META_FILE, "Build Meta File",
-                getFieldEditorParent()));
+        // addField(new
+        // WorkspaceFileFieldEditor(PreferenceConstants.P_STRING_BUILD_META_FILE_REGEX,
+        // "Build Meta File Selector", getFieldEditorParent()));
+        // addField(new
+        // WorkspaceFileFieldEditor(PreferenceConstants.P_STRING_BUILD_META_FILE,
+        // "Build Meta File",
+        // getFieldEditorParent()));
 
         addField(new SpacerFieldEditor(getFieldEditorParent()));
 
