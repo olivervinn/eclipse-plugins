@@ -11,18 +11,18 @@ Utils
 
 Store your current open views <kbd>CTRL+SHIFT+F5</kbd> and restore them via the menu or keyboard <kbd>CTRL+F5</kbd>. For good measure you can also undo your restore too.
 
-![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.utils/images/view_hopper.png)
+![](https://raw.github.com/olivervinn/eclipse-plugins/master/com.vinn.feature.utils/images/view_hopper.png)
 
 
 **Font Size changer**
 
 Yet another font size changer. Using <kbd>CTRL+SHIFT+=</kbd> to increase and <kbd>CTRL+SHIFT+-</kbd> to decrease font size. While <kbd>CTRL+0</kbd> is available to reset to a default font size quickly. The none standard key combination is chosen so not to conflict with the default keys used by CDT for source navigation.
 
-![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.utils/images/tools.png)
+![](https://raw.github.com/olivervinn/eclipse-plugins/master/com.vinn.feature.utils/images/tools.png)
 
 *Preferences > General > Appearance > Font Size*
 
-![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.utils/images/font_size.png)
+![](https://raw.github.com/olivervinn/eclipse-plugins/master/com.vinn.feature.utils/images/font_size.png)
 
 
 
@@ -36,7 +36,7 @@ The Editor context menu is seriously over populated so activities are used to ta
 
 *Preferences > General > Context Menu*
 
-![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.utils/images/context_menu.png)
+![](https://raw.github.com/olivervinn/eclipse-plugins/master/com.vinn.feature.utils/images/context_menu.png)
 
 
 **Refresh all project resources**
@@ -53,14 +53,14 @@ With one click refresh all workspace project resources
 CDT Specific
 ==
 
-The CDT plugin surfaces some control over the indexer and across projects. 
+The CDT plugin surfaces some control over the indexer and across projects.
 
 * Associate (cross reference) C projects
 * Rebuild all project indexes
 * Stop the indexer
 
 
-![](https://raw.github.com/ovinn/eclipse-plugins/master/com.vinn.feature.cdt/images/proj_workspace_menu.png)
+![](https://raw.github.com/olivervinn/eclipse-plugins/master/com.vinn.feature.cdt/images/proj_workspace_menu.png)
 
 
 **Associate (cross reference) C projects**
@@ -81,4 +81,3 @@ Rebuild the index on all projects with one click.
 **Stop the indexer**
 
 Often the indexer starts when you realise you need to change something first. Now you can stop it!
-
